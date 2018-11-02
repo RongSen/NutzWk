@@ -131,7 +131,6 @@
 
             %>
             <li class="dropdown">
-
                     <% if(!isEmpty(@secondMenus.get(firstMenu.path))){%>
                 <a href="javascript:;" data-toggle="dropdown">
                     <% if(has(firstMenu.icon)){ %>
@@ -143,10 +142,10 @@
                             >
                 </a>
                 <%}else{%>
-                    <a href="<% if(!isEmpty(firstMenu.href)){ %><%if(@string.startWith(firstMenu.href,'/')){%>${base}${firstMenu.href!}<%}else{%>${firstMenu.href!}<%}%> <% }else{ %>javascript:;<% } %>" <%if(@string.startWith(firstMenu.target,'_')){%>target="${firstMenu.target!}"<%}else{%>${firstMenu.target!}<%}%>>
-                   <span>
-                        <%if(lang=="zh_CN"){%>${firstMenu.name}<%}else{%>${firstMenu.aliasName}<%}%></span></a>
-                    <%}%>
+                <a href="<% if(!isEmpty(firstMenu.href)){ %><%if(@string.startWith(firstMenu.href,'/')){%>${base}${firstMenu.href!}<%}else{%>${firstMenu.href!}<%}%> <% }else{ %>javascript:;<% } %>" <%if(@string.startWith(firstMenu.target,'_')){%>target="${firstMenu.target!}"<%}else{%>${firstMenu.target!}<%}%>>
+                   <span><%if(lang=="zh_CN"){%>${firstMenu.name}<%}else{%>${firstMenu.aliasName}<%}%></span>
+                </a>
+                <%}%>
                 <% if(!isEmpty(@secondMenus.get(firstMenu.path))){%>
                 <ul class="dropdown-menu topnav">
                     <% for(secondMenu in @secondMenus.get(firstMenu.path)){ %>
@@ -228,7 +227,6 @@
         </ul>
     </header>
     <section class="layout">
-
         <aside class="sidebar offscreen-left">
 
             <nav class="main-navigation" data-height="auto" data-size="6px" data-distance="0" data-rail-visible="true"
@@ -329,10 +327,9 @@
         });
     }
     $(document).ready(function () {
-
         if($.support.pjax) {
-              <%if(@shiro.getPrincipalProperty('loginPjax')){%>
-            $(document).pjax('a[data-pjax]', '#container', {maxCacheLength:0,push:false, replace:true,fragment: '#container', timeout: 8000});
+            <%if(@shiro.getPrincipalProperty('loginPjax')){%>
+                $(document).pjax('a[data-pjax]', '#container', {maxCacheLength:0,push:false, replace:true,fragment: '#container', timeout: 8000});
             <%}%>
             bindLeft();
             $('#topnav a[data-pjax]').on('click',function(){
@@ -341,17 +338,18 @@
                     bindLeft();
                 }, "html");
             });
-            $.get("${base!}/platform/home/path?url="+window.location.href,function (data) {
+            $.get("${base!}/platform/home/path?url="+window.location.href,function(data){
                 $("#leftnav").html(data);
                 bindLeft();
             }, "html");
+
             <%if(@shiro.getPrincipalProperty('loginPjax')){%>
-            $(document).on('pjax:send', function () { //pjax链接点击后显示加载动画；
-                $(".gallery-loader").fadeIn();
-            });
-            $(document).on('pjax:complete', function () { //pjax链接加载完成后隐藏加载动画；
-                setTimeout(function(){$(".gallery-loader").fadeOut()},250);
-            });
+                $(document).on('pjax:send', function () { //pjax链接点击后显示加载动画；
+                    $(".gallery-loader").fadeIn();
+                });
+                $(document).on('pjax:complete', function () { //pjax链接加载完成后隐藏加载动画；
+                    setTimeout(function(){$(".gallery-loader").fadeOut()},250);
+                });
             <%}%>
         }
 

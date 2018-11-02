@@ -6,11 +6,13 @@ import cn.wizzer.framework.base.service.BaseServiceImpl;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.Sqls;
+import org.nutz.ioc.loader.annotation.IocBean;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@IocBean(args = {"refer:dao"})
 public class SysMsgServiceImpl extends BaseServiceImpl<Sys_msg> implements SysMsgService {
 
     public SysMsgServiceImpl(Dao dao) {

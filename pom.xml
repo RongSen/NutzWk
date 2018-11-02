@@ -121,6 +121,12 @@
             <artifactId>quartz</artifactId>
             <version>2.2.3</version>
         </dependency>
+        <!-- shiro-all -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-all</artifactId>
+            <version>1.2.3</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
