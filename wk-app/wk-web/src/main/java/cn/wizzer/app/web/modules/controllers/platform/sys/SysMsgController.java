@@ -19,9 +19,16 @@ public class SysMsgController {
 
     @At("")
     @Ok("beetl:/platform/sys/msg/index.html")
-    @RequiresPermissions("sys.manager.dict")
+    @RequiresPermissions("sys.manager.msg")
     public Object index(){
         return sysMsgService.getSysMsgList();
+    }
+
+    @At("/add")
+    @Ok("beetl:/platform/sys/msg/add.html")
+    @RequiresPermissions("sys.manager.msg")
+    public Object add(){
+        return null;
     }
 
 }
