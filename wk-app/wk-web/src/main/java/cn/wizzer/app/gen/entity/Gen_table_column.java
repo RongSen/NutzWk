@@ -3,7 +3,6 @@ package cn.wizzer.app.gen.entity;
 import cn.wizzer.app.gen.util.Utils;
 import cn.wizzer.framework.base.model.BaseModel;
 import org.nutz.dao.entity.annotation.*;
-import org.nutz.lang.Times;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -21,7 +20,6 @@ public class Gen_table_column extends BaseModel implements Serializable {
     private String id;
 
     @Column
-    @Name
     @Comment("归属表ID")
     @ColDefine(type = ColType.VARCHAR, width = 32)
     private String genTableId;

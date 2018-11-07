@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-@Table("gen.table")
+@Table("gen_table")
 public class Gen_table extends BaseModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,19 +21,16 @@ public class Gen_table extends BaseModel implements Serializable {
     private String id;
 
     @Column
-    @Name
     @Comment("名称")
     @ColDefine(type = ColType.VARCHAR, width = 200)
     private String name;
 
     @Column
-    @Name
     @Comment("描述")
     @ColDefine(type = ColType.VARCHAR, width = 500)
     private String comments;
 
     @Column
-    @Name
     @Comment("实体类名称")
     @ColDefine(type = ColType.VARCHAR, width = 100)
     private String className;
