@@ -34,7 +34,7 @@ public class GenTableController {
     }
 
     @At("/add")
-    @Ok("beetle:/modules/gen/table/index.html")
+    @Ok("json:full")
     @RequiresPermissions("sys.devtools.gen")
     public  Object add(@Param("..") Gen_table table){
         try {
@@ -45,7 +45,7 @@ public class GenTableController {
     }
 
     @At("/delete")
-    @Ok("beetle:/modules/gen/table/index.html")
+    @Ok("json:full")
     @RequiresPermissions("sys.devtools.gen")
     public Object delete(String id){
         try {
