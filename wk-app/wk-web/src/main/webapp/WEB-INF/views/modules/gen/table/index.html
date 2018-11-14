@@ -5,26 +5,12 @@ layout("/layouts/platform.html"){
 <header class="header-control">
     <script language="JavaScript" type="text/javascript" src="${base}/assets/plugins/My97DatePicker/WdatePicker.js"></script>
 
-    <div class="btn-group" style="padding-left: 10px;">
-        <select id="type" class="form-control" onchange="search()">
-            <option value="">全部日志</option>
-            <option value="api">接口日志</option>
-            <option value="platform">系统日志</option>
-            <option value="info">其他日志</option>
-        </select>
-    </div>
     <div class="btn-group tool-button">
         <div class="input-group date form_datetime " style="width:150px;float:left;padding-left: 5px;padding-right: 5px"
              data-date-format="dd MM yyyy" data-link-field="beginDate">
             <input class="form-control" type='text'
                    id="beginDate" name="beginDate" value='${today!}'
                    onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'%y-%M-%d\'}'})"/>
-        </div>
-        <div class="input-group date form_datetime " style="width:150px;float:left;padding-left: 5px;padding-right: 5px"
-             data-date-format="dd MM yyyy" data-link-field="endDate">
-            <input class="form-control" type='text'
-                   id='endDate' name='endDate' value='${today!}'
-                   onFocus="var date=limitMonthDate(2);WdatePicker({minDate:'#F{$dp.$D(\'beginDate\')||\'${month!}-01\'}',maxDate:date})"/>
         </div>
     </div>
     <div class="btn-group tool-button">
