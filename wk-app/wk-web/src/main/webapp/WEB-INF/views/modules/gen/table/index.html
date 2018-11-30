@@ -2,44 +2,72 @@
 layout("/layouts/platform.html"){
 %>
 
-<header class="header-control">
-    <script language="JavaScript" type="text/javascript" src="${base}/assets/plugins/My97DatePicker/WdatePicker.js"></script>
+<section class="content-wrap bg-white">
+    <header class="header-control bg-white">
+        <script language="JavaScript" type="text/javascript" src="${base}/assets/plugins/My97DatePicker/WdatePicker.js"></script>
 
-    <div class="btn-group tool-button">
-        <div class="input-group date form_datetime " style="width:150px;float:left;padding-left: 5px;padding-right: 5px"
-             data-date-format="dd MM yyyy" data-link-field="beginDate">
-            <input class="form-control" type='text'
-                   id="beginDate" name="beginDate" value='${today!}'
-                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'%y-%M-%d\'}'})"/>
+        <div class="btn-group tool-button" style="padding-left: 10px;">
+            <a class="btn btn-primary navbar-btn" href="${base}/gen/table/add" data-toggle="modal" data-target="#dialogDetail"><i class="ti-plus"></i> 新增表</a>
+        </div>
+        <div class="btn-group tool-button">
+            <div class="input-group" style="width:150px;float:left;padding-left: 5px;padding-right: 5px">
+                <input type="text" id="name" class="form-control" name="name" data-parsley-required="true" placeholder="表名" value="">
+            </div>
+            <div class="input-group" style="width:150px;float:left;padding-left: 5px;padding-right: 5px">
+                <input type="text" id="className" class="form-control" name="className" data-parsley-required="true" placeholder="类名" value="">
+            </div>
+        </div>
+        <div class="btn-group tool-button">
+            <button class="btn btn-primary navbar-btn" onclick="search()">查询</button>
+        </div>
+
+        <!--<div class="pull-right">--><!---->
+        <!--<div class="btn-group tool-button">-->
+        <!--<button class="btn btn-danger navbar-btn" onclick="delCheck()"><i class="ti-close"></i> 清空日志</button>-->
+        <!--</div>-->
+        <!--</div>-->
+    </header>
+    <div class="panel-body" style="margin-top: 10px;">
+        <div class="table-responsive no-border">
+            <input id="unitid" type="hidden">
+            <table class="table table-bordered table-striped mg-t datatable">
+                <thead>
+                    <tr>
+                        <th>表名</th>
+                        <th>说明</th>
+                        <th>类名</th>
+                        <th>父表</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for(obj in list){%>
+                    <tr data-tt-id="${obj.id!}">
+                        <td>
+                            <span class="pd-l-sm"></span> ${obj.name!}
+                        </td>
+                        <td>${obj.comments}</td>
+                        <td>${obj.className}</td>
+                        <td>${obj.parentTable}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                    <i class="ti-settings"></i>
+                                    <span class="ti-angle-down"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="${base}/modules/gen/table/edit/${obj.id!}" data-pjax>修改</a></li>
+                                    <li><a href="javascript:;" onclick="del('${obj.id!}')">删除</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                <%} %>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="btn-group tool-button">
-        <input type="text" id="name" class="form-control" name="name" data-parsley-required="true" placeholder="表名" value="">
-    </div>
-    <div class="btn-group tool-button">
-        <button class="btn btn-primary navbar-btn" onclick="search()">查询</button>
-    </div>
-
-    <!--<div class="pull-right">-->
-    <!--<div class="btn-group tool-button">-->
-    <!--<button class="btn btn-danger navbar-btn" onclick="delCheck()"><i class="ti-close"></i> 清空日志</button>-->
-    <!--</div>-->
-    <!--</div>-->
-</header>
-<div class=panel-body style="margin-top: 10px;">
-    <div class="table-responsive no-border">
-        <input id="unitid" type="hidden">
-        <table class="table table-bordered table-striped mg-t datatable">
-            <thead>
-            <tr>
-                <th>表名</th>
-                <th>说明</th>
-                <th>类名</th>
-                <th>父表</th>
-                <th>操作</th>
-        </table>
-    </div>
-</div>
+</section>
 <div id="dialogDelete" class="modal fade bs-modal-sm" tabindex="-2" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -87,10 +115,10 @@ layout("/layouts/platform.html"){
                     d.unitid = $('#unitid').val();
                 }
             },
-            "order": [[5, "desc"]],
+            "order": [[4, "desc"]],
             "columns": [
                 {"data": "name", "bSortable": true, width: 80},
-                {"data": "comment", "bSortable": false},
+                {"data": "comments", "bSortable": false},
                 {"data": "className", "bSortable": false},
                 {"data": "parentTable", "bSortable": true}
             ],
