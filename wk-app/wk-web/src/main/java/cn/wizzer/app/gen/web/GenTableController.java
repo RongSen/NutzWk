@@ -15,6 +15,7 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @IocBean
@@ -26,15 +27,16 @@ public class GenTableController {
     @Inject
     private GenTableService genTableService;
 
-    @At("")
+    @At
     @Ok("beetl:/modules/gen/table/index.html")
     @RequiresPermissions("sys.devtools.gen")
-    public Object index(){
-        return genTableService.getGenTableList();
+    public void index(HttpServletRequest req){
+        //req.setAttribute("list", cmsChannelService.query(Cnd.where("parentId", "=", "").or("parentId", "is", null).asc("location").asc("path")));
+        req.setAttribute("list", genTableService.getGenTableList());
     }
 
-    @At("/add")
-    @Ok("json:full")
+    @At
+    @Ok("beetl:/modules/gen/table/add.html")
     @RequiresPermissions("sys.devtools.gen")
     public  Object add(@Param("..") Gen_table table){
         try {
