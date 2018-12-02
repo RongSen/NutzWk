@@ -17,85 +17,126 @@ layout("/layouts/platform.html"){
         <div class="row mb15">
             <div class="col-lg-12">
                 <form id="addRoleForm" class="form-horizontal stepy" method="post" action="${base}/platform/sys/role/addDo">
-                    <input type="hidden" id="menuIds" name="menuIds"/>
-                    <input type="hidden" id="userIds" name="userIds"/>
                     <fieldset title="第 1 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
-                        <legend>基本信息</legend>
+                        <legend>选择业务表</legend>
                         <div class="form-group">
-                            <label for="unitName" class="col-sm-1 control-label">所属单位</label>
+                            <div class="form-group">
+                                <label for="genTable" class="col-sm-1 control-label">表名</label>
 
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input id="unitName" name="unitName" type="text" class="form-control" validate="true"
-                                           placeholder="请选择单位or系统角色" readonly value="<%if(!isEmpty(obj)){%>${obj.name}<%}%>"/>
-                                    <span class="input-group-btn">
-				                             			<button type="button" class="btn btn-primary" data-toggle="modal"
-                                                                data-target="#dialogSelectUnit"><i class="ti-plus"></i> 选择
-                                                        </button>
-				                             		</span>
-                                </div>
-                                <input type="hidden" id="unitid" name="unitid" value="<%if(!isEmpty(obj)){%>${obj.id}<%}%>"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-1 control-label">角色名称</label>
-
-                            <div class="col-sm-11">
-                                <input type="text" class="form-control" id="name" name="name" validate="true" placeholder="角色名称"
-                                       maxlength="20">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="code" class="col-sm-1 control-label">权限标识</label>
-
-                            <div class="col-sm-11">
-                                <input type="text" class="form-control" id="code" name="code" validate="true" placeholder="权限标识"
-                                       maxlength="50">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="note" class="col-sm-1 control-label">角色说明</label>
-
-                            <div class="col-sm-11">
-                                <input type="text" class="form-control" id="note" name="note" placeholder="角色说明"
-                                       maxlength="50">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="disabled" class="col-sm-1 control-label">是否禁用</label>
-
-                            <div class="col-sm-11 switcha">
-                                <div class="mr15">
-                                    <input type="checkbox" id="disabled" name="disabled" class="form-control js-switch-blue"
-                                    >
+                                <div class="col-sm-8">
+                                    <select id="genTable" name="genTable" data-parsley-required="true" class="form-control">
+                                        <option value="">请选择需要添加的业务表</option>
+                                        <%if(!isEmpty(list)){ for(o in tableList){
+                                        %>
+                                        <option value="${o.name}" <%if(o.id==classId){%>selected<%}%>>${o.name} ${o.comments}</option>
+                                        <%
+                                        } }%>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
                     <fieldset title="第 2 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
-                        <legend>分配菜单权限</legend>
-                        <div class="form-group no-b">
-                            <div class="col-sm-8">
-                                <div class="panel">
-                                    <div class="panel-heading no-b">
-                                        <h5>选择<b>菜单</b></h5>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div id="jsTreeMenu"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="panel">
-                                    <div class="panel-heading no-b">
-                                        <h5>菜单<b>描述</b></h5>
-                                    </div>
-                                    <div id="menuDescript" class="panel-body">
-                                        <div class='alert alert-info'>请勾选每一个需要分配的菜单</div>
-                                    </div>
-                                </div>
+                        <legend>基本信息</legend>
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-1 control-label">表名</label>
+
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="name" name="name" validate="true" placeholder="表名"
+                                       maxlength="20">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="className" class="col-sm-1 control-label">实体类名</label>
+
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="className" name="className" validate="true" placeholder="实体类名"
+                                       maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="parentTable" class="col-sm-1 control-label">关联父表</label>
+
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="parentTable" name="parentTable" placeholder="关联父表"
+                                       maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="parentTableFk" class="col-sm-1 control-label">关联父表外键</label>
+
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="parentTableFk" name="parentTableFk" placeholder="关联父表外键"
+                                       maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comments" class="col-sm-1 control-label">描述</label>
+
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="comments" name="comments" placeholder="描述"
+                                       maxlength="50">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset title="第 3 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                        <legend>字段列表</legend>
+
+                        <table class="table table-bordered table-striped mg-t datatable">
+                            <thead>
+                            <tr>
+                                <!--字段-->
+                                <th>列名</th>
+                                <th>列说明</th>
+                                <th>字段类型</th>
+                                <th>属性类型</th>
+                                <th>属性名称</th>
+                                <ht>主键</ht>
+                                <ht>插入</ht>
+                                <ht>更新</ht>
+
+                                <!--列表-->
+                                <ht>列表</ht>
+                                <ht>查询</ht>
+                                <ht>匹配方式</ht>
+
+                                <!--表单-->
+                                <ht>编辑</ht>
+                                <th>必填</th>
+                                <ht>控件类型</ht>
+                                <th>栅格</th>
+                                <ht>新行</ht>
+                                <ht>字典类型</ht>
+                                <ht>字段验证</ht>
+                                <ht>排序</ht>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% for(obj in tableColumnList){%>
+                            <tr data-tt-id="${obj.id!}">
+                                <td>
+                                    <span class="pd-l-sm"></span> ${obj.name!}
+                                </td>
+                                <td>${obj.comments}</td>
+                                <td>${obj.className}</td>
+                                <td>${obj.parentTable}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                            <i class="ti-settings"></i>
+                                            <span class="ti-angle-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="${base}/modules/gen/table/edit/${obj.id!}" data-pjax>修改</a></li>
+                                            <li><a href="javascript:;" onclick="del('${obj.id!}')">删除</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <%} %>
+                            </tbody>
+                        </table>
                     </fieldset>
                     <button class="stepy-finish btn btn-primary pull-right" data-loading-text="正在提交...">完成</button>
                 </form>
@@ -103,7 +144,7 @@ layout("/layouts/platform.html"){
         </div>
     </div>
 </div>
-<div id="dialogSelectUnit" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="dialogSelectTable" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -113,7 +154,7 @@ layout("/layouts/platform.html"){
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div id="jsTreeUnit" class="demo"></div>
+                        <div id="jsSelectTable" class="demo"></div>
                     </div>
                 </div>
             </div>
@@ -125,8 +166,90 @@ layout("/layouts/platform.html"){
     </div>
 </div>
 <script language="JavaScript">
+    $(function(){
+        //1.初始化Table
+        var oTable = new TableInit();
+        oTable.Init();
+
+        //2.初始化Button的点击事件
+        var oButtonInit = new ButtonInit();
+        oButtonInit.Init();
+    });
+
+    var TableInit = function (columnsTemplate) {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#tb_departments').bootstrapTable({
+                url: '/Home/GetDepartment',         //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: true,                  //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                columns: [{
+                    checkbox: true
+                }, {
+                    field: 'Name',
+                    title: '部门名称'
+                }, {
+                    field: 'ParentName',
+                    title: '上级部门'
+                }, {
+                    field: 'Level',
+                    title: '部门级别'
+                }, {
+                    field: 'Desc',
+                    title: '描述'
+                }, ]
+            });
+        };
+
+        //得到查询的参数
+        oTableInit.queryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                departmentname: $("#txt_search_departmentname").val(),
+                statu: $("#txt_search_statu").val()
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
+
+
+    var ButtonInit = function () {
+        var oInit = new Object();
+        var postdata = {};
+
+        oInit.Init = function () {
+            //初始化页面上面的按钮事件
+        };
+
+        return oInit;
+    };
+
     function initTreeView() {
-        $("#jsTreeUnit").jstree({
+        $("#jsSelectTable").jstree({
             plugins: ["wholerow"],
             core: {
                 data: {
