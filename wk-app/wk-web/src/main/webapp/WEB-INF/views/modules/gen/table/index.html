@@ -32,36 +32,36 @@ layout("/layouts/platform.html"){
             <input id="unitid" type="hidden">
             <table class="table table-bordered table-striped mg-t datatable">
                 <thead>
-                    <tr>
-                        <th>表名</th>
-                        <th>说明</th>
-                        <th>类名</th>
-                        <th>父表</th>
-                        <th>操作</th>
-                    </tr>
+                <tr>
+                    <th>表名</th>
+                    <th>说明</th>
+                    <th>类名</th>
+                    <th>父表</th>
+                    <th>操作</th>
+                </tr>
                 </thead>
                 <tbody>
                 <% for(obj in list){%>
-                    <tr data-tt-id="${obj.id!}">
-                        <td>
-                            <span class="pd-l-sm"></span> ${obj.name!}
-                        </td>
-                        <td>${obj.comments}</td>
-                        <td>${obj.className}</td>
-                        <td>${obj.parentTable}</td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <i class="ti-settings"></i>
-                                    <span class="ti-angle-down"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="${base}/modules/gen/table/edit/${obj.id!}" data-pjax>修改</a></li>
-                                    <li><a href="javascript:;" onclick="del('${obj.id!}')">删除</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                <tr data-tt-id="${obj.id!}">
+                    <td>
+                        <span class="pd-l-sm"></span> ${obj.name!}
+                    </td>
+                    <td>${obj.comments}</td>
+                    <td>${obj.className}</td>
+                    <td>${obj.parentTable}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                <i class="ti-settings"></i>
+                                <span class="ti-angle-down"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="${base}/modules/gen/table/edit/${obj.id!}" data-pjax>修改</a></li>
+                                <li><a href="javascript:;" onclick="del('${obj.id!}')">删除</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
                 <%} %>
                 </tbody>
             </table>
@@ -151,18 +151,18 @@ layout("/layouts/platform.html"){
         dialog.modal("show");
         dialog.find("#ok").unbind("click");
         dialog.find("#ok").bind("click", function (event) {
-           var btn = $(this);
-           btn.button("loading");
-           $.post("${base}/gen/table/delete"+id, {}, function(data){
-               if(data.code == 0){
-                   datatable.ajax.reload(null, false);
-               } else {
-                 Toast.error(data.msg);
-               }
+            var btn = $(this);
+            btn.button("loading");
+            $.post("${base}/gen/table/delete"+id, {}, function(data){
+                if(data.code == 0){
+                    datatable.ajax.reload(null, false);
+                } else {
+                    Toast.error(data.msg);
+                }
 
-               btn.button("reset");
-               dialog.modal("hide");
-           }, "json");
+                btn.button("reset");
+                dialog.modal("hide");
+            }, "json");
         });
     }
     $(function () {
