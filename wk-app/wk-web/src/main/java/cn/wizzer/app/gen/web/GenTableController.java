@@ -12,6 +12,7 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
 import org.nutz.mvc.annotation.At;
+import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
@@ -27,7 +28,7 @@ public class GenTableController {
     @Inject
     private GenTableService genTableService;
 
-    @At
+    @At("")
     @Ok("beetl:/modules/gen/table/index.html")
     @RequiresPermissions("sys.devtools.gen")
     public void index(HttpServletRequest req){

@@ -22,8 +22,8 @@ public class Gen_table extends BaseModel implements Serializable {
 
     @Column
     @Comment("名称")
-    @ColDefine(type = ColType.VARCHAR, width = 200)
-    private String name;
+    @ColDefine(type = ColType.VARCHAR, width = 64)
+    private String tableName;
 
     @Column
     @Comment("描述")
@@ -37,16 +37,61 @@ public class Gen_table extends BaseModel implements Serializable {
 
     @Column
     @Comment("关联父表")
-    @ColDefine(type = ColType.VARCHAR, width = 200)
-    private String parentTable;
+    @ColDefine(type = ColType.VARCHAR, width = 64)
+    private String parentTableName;
 
     @Column
     @Comment("关联父表外键")
     @ColDefine(type = ColType.VARCHAR, width = 32)
-    private String parentTableFk;
+    private String parentTableFkName;
 
     @Column
-    @Comment("创建人")
+    @Comment("使用的模版")
+    @ColDefine(type = ColType.VARCHAR, width = 200)
+    private String tplCategory;
+
+    @Column
+    @Comment("生成包路径")
+    @ColDefine(type = ColType.VARCHAR, width = 500)
+    private String packageName;
+
+    @Column
+    @Comment("生成模块名")
+    @ColDefine(type = ColType.VARCHAR, width = 30)
+    private String moduleName;
+
+    @Column
+    @Comment("生成子模块名")
+    @ColDefine(type = ColType.VARCHAR, width = 30)
+    private String subModuleName;
+
+    @Column
+    @Comment("生成功能名")
+    @ColDefine(type = ColType.VARCHAR, width = 200)
+    private String functionName;
+
+    @Column
+    @Comment("生成功能名(简写)")
+    @ColDefine(type = ColType.VARCHAR, width = 50)
+    private String functionNameSimple;
+
+    @Column
+    @Comment("生成功能作者")
+    @ColDefine(type = ColType.VARCHAR, width = 50)
+    private String functionAuthor;
+
+    @Column
+    @Comment("生成基础路径")
+    @ColDefine(type = ColType.VARCHAR, width = 1000)
+    private String genBaseDir;
+
+    @Column
+    @Comment("其他生成选项")
+    @ColDefine(type = ColType.VARCHAR, width = 1000)
+    private String options;
+
+    @Column
+    @Comment("创建者")
     @ColDefine(type = ColType.VARCHAR, width = 32)
     private String createBy;
 
@@ -56,7 +101,7 @@ public class Gen_table extends BaseModel implements Serializable {
     private Timestamp createDate;
 
     @Column
-    @Comment("更新人")
+    @Comment("更新者")
     @ColDefine(type = ColType.VARCHAR, width = 32)
     private String updateBy;
 
@@ -74,11 +119,20 @@ public class Gen_table extends BaseModel implements Serializable {
         Timestamp now = Utils.getTimestamp();
 
         this.id = "";
-        this.name = "";
+        this.tableName = "";
         this.comments = "";
         this.className = "";
-        this.parentTable = "";
-        this.parentTableFk = "";
+        this.parentTableName = "";
+        this.parentTableFkName = "";
+        this.tplCategory = "";
+        this.packageName = "";
+        this.moduleName = "";
+        this.subModuleName = "";
+        this.functionName = "";
+        this.functionNameSimple = "";
+        this.functionAuthor = "";
+        this.genBaseDir = "";
+        this.options = "";
         this.createBy = "";
         this.createDate = now;
         this.updateBy = "";
@@ -94,12 +148,12 @@ public class Gen_table extends BaseModel implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTableName() {
+        return tableName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
     public String getComments() {
@@ -118,20 +172,92 @@ public class Gen_table extends BaseModel implements Serializable {
         this.className = className;
     }
 
-    public String getParentTable() {
-        return parentTable;
+    public String getParentTableName() {
+        return parentTableName;
     }
 
-    public void setParentTable(String parentTable) {
-        this.parentTable = parentTable;
+    public void setParentTableName(String parentTableName) {
+        this.parentTableName = parentTableName;
     }
 
-    public String getParentTableFk() {
-        return parentTableFk;
+    public String getParentTableFkName() {
+        return parentTableFkName;
     }
 
-    public void setParentTableFk(String parentTableFk) {
-        this.parentTableFk = parentTableFk;
+    public void setParentTableFkName(String parentTableFkName) {
+        this.parentTableFkName = parentTableFkName;
+    }
+
+    public String getTplCategory() {
+        return tplCategory;
+    }
+
+    public void setTplCategory(String tplCategory) {
+        this.tplCategory = tplCategory;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
+
+    public String getSubModuleName() {
+        return subModuleName;
+    }
+
+    public void setSubModuleName(String subModuleName) {
+        this.subModuleName = subModuleName;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
+    }
+
+    public String getFunctionNameSimple() {
+        return functionNameSimple;
+    }
+
+    public void setFunctionNameSimple(String functionNameSimple) {
+        this.functionNameSimple = functionNameSimple;
+    }
+
+    public String getFunctionAuthor() {
+        return functionAuthor;
+    }
+
+    public void setFunctionAuthor(String functionAuthor) {
+        this.functionAuthor = functionAuthor;
+    }
+
+    public String getGenBaseDir() {
+        return genBaseDir;
+    }
+
+    public void setGenBaseDir(String genBaseDir) {
+        this.genBaseDir = genBaseDir;
+    }
+
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
     }
 
     public String getCreateBy() {

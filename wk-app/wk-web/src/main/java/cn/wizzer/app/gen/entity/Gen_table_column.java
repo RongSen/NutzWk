@@ -20,14 +20,29 @@ public class Gen_table_column extends BaseModel implements Serializable {
     private String id;
 
     @Column
-    @Comment("归属表ID")
+    @Comment("表名")
     @ColDefine(type = ColType.VARCHAR, width = 32)
     private String genTableId;
 
     @Column
-    @Comment("name")
+    @Comment("列名")
     @ColDefine(type = ColType.VARCHAR, width = 200)
-    private String name;
+    private String columnName;
+
+    @Column
+    @Comment("列排序(升序)")
+    @ColDefine(type = ColType.FLOAT, width = 10)
+    private String columnSort;
+
+    @Column
+    @Comment("类型")
+    @ColDefine(type = ColType.VARCHAR, width = 100)
+    private String columnType;
+
+    @Column
+    @Comment("列标签名")
+    @ColDefine(type = ColType.VARCHAR, width = 50)
+    private String columnLabel;
 
     @Column
     @Comment("描述")
@@ -35,19 +50,14 @@ public class Gen_table_column extends BaseModel implements Serializable {
     private String comment;
 
     @Column
-    @Comment("jdbcType")
-    @ColDefine(type = ColType.VARCHAR, width = 100)
-    private String jdbcType;
-
-    @Column
-    @Comment("javaType")
-    @ColDefine(type = ColType.VARCHAR, width = 500)
-    private String javaType;
-
-    @Column
-    @Comment("JAVA字段名称")
+    @Comment("类属性名")
     @ColDefine(type = ColType.VARCHAR, width = 200)
-    private String javaField;
+    private String attrName;
+
+    @Column
+    @Comment("类属性类型")
+    @ColDefine(type = ColType.VARCHAR, width = 200)
+    private String attrType;
 
     @Column
     @Comment("是否主键")
@@ -65,9 +75,9 @@ public class Gen_table_column extends BaseModel implements Serializable {
     private String isInsert;
 
     @Column
-    @Comment("是否编辑字段")
+    @Comment("是否更新字段")
     @ColDefine(type = ColType.CHAR, width = 1)
-    private String isEdit;
+    private String isUpdate;
 
     @Column
     @Comment("是否列表字段")
@@ -85,7 +95,12 @@ public class Gen_table_column extends BaseModel implements Serializable {
     private String queryType;
 
     @Column
-    @Comment("字段生成方案（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）")
+    @Comment("是否编辑字段")
+    @ColDefine(type = ColType.CHAR, width = 1)
+    private String isEdit;
+
+    @Column
+    @Comment("控件类型（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）")
     @ColDefine(type = ColType.VARCHAR, width = 200)
     private String showType;
 
