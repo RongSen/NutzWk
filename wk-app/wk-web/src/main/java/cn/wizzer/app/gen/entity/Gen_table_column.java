@@ -32,7 +32,7 @@ public class Gen_table_column extends BaseModel implements Serializable {
     @Column
     @Comment("列排序(升序)")
     @ColDefine(type = ColType.FLOAT, width = 10)
-    private String columnSort;
+    private Float columnSort;
 
     @Column
     @Comment("类型")
@@ -47,7 +47,7 @@ public class Gen_table_column extends BaseModel implements Serializable {
     @Column
     @Comment("描述")
     @ColDefine(type = ColType.VARCHAR, width = 500)
-    private String comment;
+    private String comments;
 
     @Column
     @Comment("类属性名")
@@ -105,6 +105,11 @@ public class Gen_table_column extends BaseModel implements Serializable {
     private String showType;
 
     @Column
+    @Comment("其他选项")
+    @ColDefine(type = ColType.VARCHAR, width = 1000)
+    private String options;
+
+    @Column
     @Comment("字段类型")
     @ColDefine(type = ColType.VARCHAR, width = 200)
     private String dictType;
@@ -113,11 +118,6 @@ public class Gen_table_column extends BaseModel implements Serializable {
     @Comment("其他设置（扩展字段JSON）")
     @ColDefine(type = ColType.VARCHAR, width = 2000)
     private String settings;
-
-    @Column
-    @Comment("排序")
-    @ColDefine(type = ColType.FLOAT, width = 10)
-    private Float sort;
 
     @Column
     @Comment("备注")
@@ -147,22 +147,28 @@ public class Gen_table_column extends BaseModel implements Serializable {
     public Gen_table_column() {
         this.id = "";
         this.genTableId = "";
-        this.name = "";
-        this.comment = "";
-        this.jdbcType = "";
-        this.javaType = "";
-        this.javaField = "";
+        this.columnName = "";
+        this.columnSort = new Float(0.0);
+        this.columnType = "";
+        this.columnLabel = "";
+        this.comments = "";
+        this.attrName = "";
+        this.attrType = "";
+
         this.isPk = "";
         this.isNull = "";
         this.isInsert ="";
-        this.isEdit = "";
+        this.isUpdate = "";
         this.isList = "";
         this.isQuery = "";
         this.queryType = "";
+        this.isEdit = "";
         this.showType = "";
+
+        this.options = "";
+
         this.dictType = "";
         this.settings = "";
-        this.sort = new Float(0.0);
         this.remark = "";
 
         Timestamp now = Utils.getTimestamp();
@@ -189,44 +195,60 @@ public class Gen_table_column extends BaseModel implements Serializable {
         this.genTableId = genTableId;
     }
 
-    public String getName() {
-        return name;
+    public String getColumnName() {
+        return columnName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
     }
 
-    public String getComment() {
-        return comment;
+    public Float getColumnSort() {
+        return columnSort;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setColumnSort(Float columnSort) {
+        this.columnSort = columnSort;
     }
 
-    public String getJdbcType() {
-        return jdbcType;
+    public String getColumnType() {
+        return columnType;
     }
 
-    public void setJdbcType(String jdbcType) {
-        this.jdbcType = jdbcType;
+    public void setColumnType(String columnType) {
+        this.columnType = columnType;
     }
 
-    public String getJavaType() {
-        return javaType;
+    public String getColumnLabel() {
+        return columnLabel;
     }
 
-    public void setJavaType(String javaType) {
-        this.javaType = javaType;
+    public void setColumnLabel(String columnLabel) {
+        this.columnLabel = columnLabel;
     }
 
-    public String getJavaField() {
-        return javaField;
+    public String getComments() {
+        return comments;
     }
 
-    public void setJavaField(String javaField) {
-        this.javaField = javaField;
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getAttrName() {
+        return attrName;
+    }
+
+    public void setAttrName(String attrName) {
+        this.attrName = attrName;
+    }
+
+    public String getAttrType() {
+        return attrType;
+    }
+
+    public void setAttrType(String attrType) {
+        this.attrType = attrType;
     }
 
     public String getIsPk() {
@@ -253,12 +275,12 @@ public class Gen_table_column extends BaseModel implements Serializable {
         this.isInsert = isInsert;
     }
 
-    public String getIsEdit() {
-        return isEdit;
+    public String getIsUpdate() {
+        return isUpdate;
     }
 
-    public void setIsEdit(String isEdit) {
-        this.isEdit = isEdit;
+    public void setIsUpdate(String isUpdate) {
+        this.isUpdate = isUpdate;
     }
 
     public String getIsList() {
@@ -285,12 +307,28 @@ public class Gen_table_column extends BaseModel implements Serializable {
         this.queryType = queryType;
     }
 
+    public String getIsEdit() {
+        return isEdit;
+    }
+
+    public void setIsEdit(String isEdit) {
+        this.isEdit = isEdit;
+    }
+
     public String getShowType() {
         return showType;
     }
 
     public void setShowType(String showType) {
         this.showType = showType;
+    }
+
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
     }
 
     public String getDictType() {
@@ -307,14 +345,6 @@ public class Gen_table_column extends BaseModel implements Serializable {
 
     public void setSettings(String settings) {
         this.settings = settings;
-    }
-
-    public Float getSort() {
-        return sort;
-    }
-
-    public void setSort(Float sort) {
-        this.sort = sort;
     }
 
     public String getRemark() {

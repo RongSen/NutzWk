@@ -4,7 +4,7 @@ layout("/layouts/platform.html"){
 <header class="header navbar bg-white shadow">
     <!-- 左按钮区 -->
     <div class="btn-group tool-button">
-        <a id="add" class="btn btn-primary navbar-btn" href="${base}/modules/gen/table" data-pjax><i class="ti-angle-left"></i> 返回</a>
+        <a id="add" class="btn btn-primary navbar-btn" href="${base}/gen/table" data-pjax><i class="ti-angle-left"></i> 返回</a>
     </div>
     <!--<div class="pull-right">-->
     <!--<div class="btn-group tool-button">-->
@@ -21,16 +21,30 @@ layout("/layouts/platform.html"){
                         <legend>选择业务表</legend>
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="genTable" class="col-sm-1 control-label">表名</label>
+                                <label for="databaseTableName" class="col-sm-1 control-label">表名</label>
+                                <!--<div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input id="databaseTableName" type="text" class="form-control" placeholder="请选择需要添加的业务表" disabled
+                                               value="<%if(!isEmpty(obj)){%>${obj.name}<%}%>"/>
 
+                                        <span class="input-group-btn">
+			                             			<button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#dialogSelectTable"><i class="ti-plus"></i>选择
+                                                    </button>
+			                             		</span>
+                                    </div>
+                                    <input type="hidden" name="databaseTableName" value="<%if(!isEmpty(obj)){%>${obj.id}<%}%>">
+                                </div>-->
                                 <div class="col-sm-8">
-                                    <select id="genTable" name="genTable" data-parsley-required="true" class="form-control">
+                                    <select id="databaseTableName" name="databaseTableName" data-parsley-required="true" class="form-control">
                                         <option value="">请选择需要添加的业务表</option>
-                                        <%if(!isEmpty(list)){ for(o in tableList){
-                                        %>
-                                        <option value="${o.name}" <%if(o.id==classId){%>selected<%}%>>${o.name} ${o.comments}</option>
-                                        <%
-                                        } }%>
+                                        <%if(!isEmpty(tableList)){
+                                            for(table in tableList){
+                                            %>
+                                                <option value="${table.tableName},${table.comments}">${table.tableName}: ${table.comments}</option>
+                                            <%
+                                            }
+                                        }%>
                                     </select>
                                 </div>
                             </div>
@@ -40,11 +54,19 @@ layout("/layouts/platform.html"){
                         <legend>基本信息</legend>
 
                         <div class="form-group">
-                            <label for="name" class="col-sm-1 control-label">表名</label>
+                            <label for="tableName" class="col-sm-1 control-label">表名</label>
 
                             <div class="col-sm-11">
-                                <input type="text" class="form-control" id="name" name="name" validate="true" placeholder="表名"
+                                <input type="text" class="form-control" id="tableName" name="tableName" validate="true" placeholder="表名"
                                        maxlength="20">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comments" class="col-sm-1 control-label">表说明</label>
+
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="comments" name="comments" placeholder="表说明"
+                                       maxlength="50">
                             </div>
                         </div>
                         <div class="form-group">
@@ -56,27 +78,50 @@ layout("/layouts/platform.html"){
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="parentTable" class="col-sm-1 control-label">关联父表</label>
+                            <label for="functionAuthor" class="col-sm-1 control-label">功能作者</label>
 
                             <div class="col-sm-11">
-                                <input type="text" class="form-control" id="parentTable" name="parentTable" placeholder="关联父表"
+                                <input type="text" class="form-control" id="functionAuthor" name="functionAuthor" validate="true" placeholder="功能作者"
                                        maxlength="50">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="parentTableFk" class="col-sm-1 control-label">关联父表外键</label>
+                            <label for="parentTableName" class="col-sm-1 control-label">关联父表</label>
 
                             <div class="col-sm-11">
-                                <input type="text" class="form-control" id="parentTableFk" name="parentTableFk" placeholder="关联父表外键"
-                                       maxlength="50">
+                                <select id="parentTableName" name="parentTableName" data-parsley-required="true" class="form-control">
+                                    <option value="">请选择关联父表</option>
+                                    <%if(!isEmpty(tableList)){
+                                        for(table in tableList){
+                                        %>
+                                            <option value="${table.tableName},${table.comments}">${table.tableName}: ${table.comments}</option>
+                                        <%
+                                        }
+                                    }%>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="comments" class="col-sm-1 control-label">描述</label>
+                            <label for="parentTableFkName" class="col-sm-1 control-label">关联父表外键</label>
 
                             <div class="col-sm-11">
-                                <input type="text" class="form-control" id="comments" name="comments" placeholder="描述"
-                                       maxlength="50">
+                                <select id="parentTableFkName" name="parentTableFkName" data-parsley-required="true" class="form-control">
+                                    <option value="">请选择关联父表外键</option>
+                                    <%if(!isEmpty(tableColumnList)){
+                                        for(tableColumn in tableColumnList){
+                                        %>
+                                            <option value="${tableColumn.tableColumnName},${tableColumn.tableColumnComments}">${tableColumn.tableColumnName}: ${tableColumn.tableColumnComments}</option>
+                                        <%
+                                        }
+                                    }%>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="remarks" class="col-sm-1 control-label">备注</label>
+
+                            <div class="col-sm-11">
+                                <textarea class="form-control" id="remarks" name="remarks" placeholder="备注" maxlength="50"></textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -113,28 +158,6 @@ layout("/layouts/platform.html"){
                             </tr>
                             </thead>
                             <tbody>
-                            <% for(obj in tableColumnList){%>
-                            <tr data-tt-id="${obj.id!}">
-                                <td>
-                                    <span class="pd-l-sm"></span> ${obj.name!}
-                                </td>
-                                <td>${obj.comments}</td>
-                                <td>${obj.className}</td>
-                                <td>${obj.parentTable}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                            <i class="ti-settings"></i>
-                                            <span class="ti-angle-down"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="${base}/modules/gen/table/edit/${obj.id!}" data-pjax>修改</a></li>
-                                            <li><a href="javascript:;" onclick="del('${obj.id!}')">删除</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <%} %>
                             </tbody>
                         </table>
                     </fieldset>
@@ -144,128 +167,74 @@ layout("/layouts/platform.html"){
         </div>
     </div>
 </div>
-<div id="dialogSelectTable" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">选择单位</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div id="jsSelectTable" class="demo"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
-                <button type="button" class="btn btn-primary" onclick="selectParentMenu()">确认选择</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script language="JavaScript">
-    $(function(){
-        //1.初始化Table
-        var oTable = new TableInit();
-        oTable.Init();
-
-        //2.初始化Button的点击事件
-        var oButtonInit = new ButtonInit();
-        oButtonInit.Init();
-    });
-
-    var TableInit = function (columnsTemplate) {
-        var oTableInit = new Object();
-        //初始化Table
-        oTableInit.Init = function () {
-            $('#tb_departments').bootstrapTable({
-                url: '/Home/GetDepartment',         //请求后台的URL（*）
-                method: 'get',                      //请求方式（*）
-                toolbar: '#toolbar',                //工具按钮用哪个容器
-                striped: true,                      //是否显示行间隔色
-                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-                pagination: true,                   //是否显示分页（*）
-                sortable: false,                     //是否启用排序
-                sortOrder: "asc",                   //排序方式
-                queryParams: oTableInit.queryParams,//传递参数（*）
-                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
-                pageNumber:1,                       //初始化加载第一页，默认第一页
-                pageSize: 10,                       //每页的记录行数（*）
-                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
-                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-                strictSearch: true,
-                showColumns: true,                  //是否显示所有的列
-                showRefresh: true,                  //是否显示刷新按钮
-                minimumCountColumns: 2,             //最少允许的列数
-                clickToSelect: true,                //是否启用点击选中行
-                height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
-                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
-                cardView: false,                    //是否显示详细视图
-                detailView: false,                   //是否显示父子表
-                columns: [{
-                    checkbox: true
-                }, {
-                    field: 'Name',
-                    title: '部门名称'
-                }, {
-                    field: 'ParentName',
-                    title: '上级部门'
-                }, {
-                    field: 'Level',
-                    title: '部门级别'
-                }, {
-                    field: 'Desc',
-                    title: '描述'
-                }, ]
-            });
-        };
-
-        //得到查询的参数
-        oTableInit.queryParams = function (params) {
-            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                limit: params.limit,   //页面大小
-                offset: params.offset,  //页码
-                departmentname: $("#txt_search_departmentname").val(),
-                statu: $("#txt_search_statu").val()
-            };
-            return temp;
-        };
-        return oTableInit;
-    };
-
-
-    var ButtonInit = function () {
-        var oInit = new Object();
-        var postdata = {};
-
-        oInit.Init = function () {
-            //初始化页面上面的按钮事件
-        };
-
-        return oInit;
-    };
-
     function initTreeView() {
-        $("#jsSelectTable").jstree({
-            plugins: ["wholerow"],
-            core: {
-                data: {
-                    async: true,
-                    url: function (node) {
-                        return node.id === "#" ? "${base}/platform/sys/role/tree" : "${base}/platform/sys/role/tree?pid=" + node.id
-                    }
-                },
-                multiple: false
-            }
-        }).on("dblclick.jstree", function (node) {
-            selectParentMenu();
+        datatable = $('.datatable').DataTable({
+            "dom": '<"toolbar">frtip',
+            "searching": false,
+            "processing": false,
+            "serverSide": true,
+            "select": true,
+            "ordering": true,
+            "language": {
+                "url": "${base}/assets/plugins/datatables/cn.json"
+            },
+            "preDrawCallback": function () {
+                sublime.showLoadingbar($(".main-content"));
+            },
+            "drawCallback": function () {
+                sublime.closeLoadingbar($(".main-content"));
+            },
+            "ajax": {
+                "url": "${base}/gen/tableColumn/data",
+                "type": "post",
+                "data": function (d) {
+                    d.unitid = $('#unitid').val();
+                }
+            },
+            "order": [[19, "desc"]],
+            "columns": [
+                {"data": "columnName", "bSortable": true, width: 80},
+                {"data": "comments", "bSortable": false},
+                {"data": "attrType", "bSortable": false},
+                {"data": "attrName", "bSortable": false},
+                {"data": "isPk", "bSortable": false},
+                {"data": "isInsert", "bSortable": false},
+                {"data": "isUpdate", "bSortable": false},
+                {"data": "isList", "bSortable": false},
+                {"data": "isQuery", "bSortable": false},
+                {"data": "queryType", "bSortable": false},
+                {"data": "isEdit", "bSortable": false},
+                {"data": "isNull", "bSortable": false},
+                {"data": "showType", "bSortable": false},
+                {"data": "gridType", "bSortable": false},
+                {"data": "isNewLine", "bSortable": false},
+                {"data": "dictType", "bSortable": false},
+                {"data": "fieldValidation", "bSortable": false}
+            ],
+            "columnDefs": [
+                {
+                    "render": function (data, type, row) {
+                        return '<div class="btn-group"><button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
+                            '   <i class="ti-settings"></i> <span class=""ti-angle-down"></span></button><ul class="dropdown-menu" role="menu">' +
+                            '<li><a href="${base}/gen/table/add'+ row.id +'" data-pjax>修改</a></li>' +
+                            '<li class="divider"></li>' +
+                            '<li><a href="javascript:void(0);" onclick=del(\''+ row.id + '\')">删除</a></li>' +
+                            '</ul></div>';
+                    },
+                    "targets": 19
+                }
+            ]
+        });
+        datatable.on('click', 'tr', function () {
+            $(this).toggleClass('selected');
+        });
+        $("#searchBtn").on('click', function () {
+            datatable.ajax.reload();
         });
     }
     //选择父菜单
-    function selectParentMenu() {
+    function selectTable() {
         var tree = $.jstree.reference("#jsTreeUnit");
         var node = tree.get_selected(true);
         $("#unitName").val(node[0].text);
@@ -283,30 +252,23 @@ layout("/layouts/platform.html"){
             legend: false,
             select: function (idx) {
                 if (idx == 2) {
-                    var unitId = $("#unitid").val();
-                    //刷新树
-                    if (!jsTreeMenu) {
-                        //$.jstree.reference("#jsTreeMenu").destroy();
-                        //初始化选择菜单树
-                        jsTreeMenu = $("#jsTreeMenu").jstree({
-                            plugins: ["wholerow", "checkbox"],
-                            core: {
-                                data: ${menus!}
-                            },
-                            checkbox: {
-                                three_state: false,
-                                cascade: 'down'
-                            }
-                        }).on("hover_node.jstree", function (e, data) {
-                            if (data.node.data)
-                                $("#menuDescript").text(data.node.data);
-                        }).on("dehover_node.jstree", function (e, data) {
-                            $("#menuDescript").html("<div class='alert alert-info'>请勾选每一个需要分配的菜单</div>");//清空菜单描述
-                        }).bind("loaded.jstree", function () {
-                            //立即加载树下所有节点
-                            //$("#jsTreeMenu").jstree("load_all");
-                        });
+                    var databaseTableInfoArray = $("#databaseTableName").val().split(",");
+                    var tableName = databaseTableInfoArray[0];
+                    var tableComments = databaseTableInfoArray[1];
+
+                    var className = "";
+                    var tableNameArray = tableName.split("_");
+                    for(i in tableNameArray){
+                        var word = tableNameArray[i];
+                        className += word.charAt(0).toUpperCase() + word.slice(1);
                     }
+
+                    $("#tableName").val(tableName);
+                    $("#comments").val(tableComments);
+                    $("#className").val(className);
+                }
+                if(idx == 3){
+                    initTreeView();
                 }
             }, finish: function(index) {
                 var tree = $.jstree.reference("#jsTreeMenu");
@@ -367,7 +329,6 @@ layout("/layouts/platform.html"){
                 form.find("button:submit").button("reset");
             }
         });
-        initTreeView();
         myForm.init();
     });
     function complete() {

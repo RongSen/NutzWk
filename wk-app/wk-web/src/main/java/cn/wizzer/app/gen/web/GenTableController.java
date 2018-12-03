@@ -1,22 +1,22 @@
 package cn.wizzer.app.gen.web;
 
-import cn.wizzer.app.gen.entity.Gen_table;
 import cn.wizzer.app.gen.service.GenTableService;
 import cn.wizzer.framework.base.Result;
 import cn.wizzer.framework.page.datatable.DataTableColumn;
 import cn.wizzer.framework.page.datatable.DataTableOrder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.json.JSONObject;
 import org.nutz.dao.Cnd;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
 import org.nutz.mvc.annotation.At;
-import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @IocBean
@@ -28,7 +28,7 @@ public class GenTableController {
     @Inject
     private GenTableService genTableService;
 
-    @At("")
+    @At({"","/index"})
     @Ok("beetl:/modules/gen/table/index.html")
     @RequiresPermissions("sys.devtools.gen")
     public void index(HttpServletRequest req){
@@ -36,15 +36,12 @@ public class GenTableController {
         req.setAttribute("list", genTableService.getGenTableList());
     }
 
-    @At
+    @At("/add")
     @Ok("beetl:/modules/gen/table/add.html")
     @RequiresPermissions("sys.devtools.gen")
-    public  Object add(@Param("..") Gen_table table){
-        try {
-            return Result.success("system.success");
-        } catch (Exception e) {
-            return Result.error("system.error");
-        }
+    public void add(HttpServletRequest req){
+        req.setAttribute("tableList", genTableService.getDatabaseTableList());
+        req.setAttribute("tableColumnList", new ArrayList<JSONObject>());
     }
 
     @At("/delete")
