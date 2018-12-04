@@ -41,7 +41,6 @@ public class GenTableController {
     @RequiresPermissions("sys.devtools.gen")
     public void add(HttpServletRequest req){
         req.setAttribute("tableList", genTableService.getDatabaseTableList());
-        req.setAttribute("tableColumnList", new ArrayList<JSONObject>());
     }
 
     @At("/delete")

@@ -168,12 +168,12 @@ layout("/layouts/platform.html"){
     </div>
 </div>
 <script language="JavaScript">
-    function initTreeView() {
+    function initTableColumn(tableName) {
         datatable = $('.datatable').DataTable({
             "dom": '<"toolbar">frtip',
             "searching": false,
             "processing": false,
-            "serverSide": true,
+            "serverSide": true, //启用服务器端处理模式
             "select": true,
             "ordering": true,
             "language": {
@@ -186,10 +186,9 @@ layout("/layouts/platform.html"){
                 sublime.closeLoadingbar($(".main-content"));
             },
             "ajax": {
-                "url": "${base}/gen/tableColumn/data",
+                "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
                 "type": "post",
                 "data": function (d) {
-                    d.unitid = $('#unitid').val();
                 }
             },
             "order": [[19, "desc"]],
@@ -212,19 +211,7 @@ layout("/layouts/platform.html"){
                 {"data": "dictType", "bSortable": false},
                 {"data": "fieldValidation", "bSortable": false}
             ],
-            "columnDefs": [
-                {
-                    "render": function (data, type, row) {
-                        return '<div class="btn-group"><button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
-                            '   <i class="ti-settings"></i> <span class=""ti-angle-down"></span></button><ul class="dropdown-menu" role="menu">' +
-                            '<li><a href="${base}/gen/table/add'+ row.id +'" data-pjax>修改</a></li>' +
-                            '<li class="divider"></li>' +
-                            '<li><a href="javascript:void(0);" onclick=del(\''+ row.id + '\')">删除</a></li>' +
-                            '</ul></div>';
-                    },
-                    "targets": 19
-                }
-            ]
+            "columnDefs": []
         });
         datatable.on('click', 'tr', function () {
             $(this).toggleClass('selected');
@@ -251,10 +238,11 @@ layout("/layouts/platform.html"){
             validate: true,
             legend: false,
             select: function (idx) {
+                var databaseTableInfoArray = $("#databaseTableName").val().split(",");
+                var tableName = databaseTableInfoArray[0];
+                var tableComments = databaseTableInfoArray[1];
+
                 if (idx == 2) {
-                    var databaseTableInfoArray = $("#databaseTableName").val().split(",");
-                    var tableName = databaseTableInfoArray[0];
-                    var tableComments = databaseTableInfoArray[1];
 
                     var className = "";
                     var tableNameArray = tableName.split("_");
@@ -268,7 +256,7 @@ layout("/layouts/platform.html"){
                     $("#className").val(className);
                 }
                 if(idx == 3){
-                    initTreeView();
+                    initTableColumn(tableName);
                 }
             }, finish: function(index) {
                 var tree = $.jstree.reference("#jsTreeMenu");

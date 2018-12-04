@@ -31,10 +31,18 @@ public class GenTableColumnController {
         return genTableColumnService.getGenTableColumList();
     }
 
+    @At("/getDatabaseTableColumnList")
+    @Ok("json:full")
+    @RequiresPermissions("sys.devtools.gen")
+    public Object getDatabaseTableColumnList(@Param("tableName") String tableName, @Param("length") int length, @Param("start") int start, @Param("draw") int draw, @Param("::order") List<DataTableOrder> order, @Param("::columns") List<DataTableColumn> columns) {
+
+        return genTableColumnService.getDatabaseTableColumnList(tableName);
+    }
+
     @At
     @Ok("json:full")
     @RequiresPermissions("sys.devtools.gen")
-    public Object data(@Param("length") int length, @Param("start") int start, @Param("draw") int draw, @Param("::order") List<DataTableOrder> order, @Param("::columns") List<DataTableColumn> columns) {
+    public Object data1(@Param("length") int length, @Param("start") int start, @Param("draw") int draw, @Param("::order") List<DataTableOrder> order, @Param("::columns") List<DataTableColumn> columns) {
         Cnd cnd = Cnd.NEW();
         return genTableColumnService.data(length, start, draw, order, columns, cnd, null);
     }
