@@ -189,7 +189,6 @@ layout("/layouts/platform.html"){
                 "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
                 "type": "post",
                 "data": function (d) {
-                    console.log(d);
                 }
             },
             "order": [[19, "desc"]],
@@ -212,7 +211,19 @@ layout("/layouts/platform.html"){
                 {"data": "dictType", "bSortable": false},
                 {"data": "fieldValidation", "bSortable": false}
             ],
-            "columnDefs": []
+            "columnDefs": [
+                {
+                    "render": function (data, type, row) {
+                        return '<div class="btn-group"><button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
+                            '   <i class="ti-settings"></i> <span class=""ti-angle-down"></span></button><ul class="dropdown-menu" role="menu">' +
+                            '<li><a href="${base}/gen/table/add'+ row.id +'" data-pjax>修改</a></li>' +
+                            '<li class="divider"></li>' +
+                            '<li><a href="javascript:void(0);" onclick=del(\''+ row.id + '\')">删除</a></li>' +
+                            '</ul></div>';
+                    },
+                    "targets": 19
+                }
+            ]
         });
         datatable.on('click', 'tr', function () {
             $(this).toggleClass('selected');
