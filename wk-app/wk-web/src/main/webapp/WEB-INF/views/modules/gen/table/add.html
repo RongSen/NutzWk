@@ -132,29 +132,30 @@ layout("/layouts/platform.html"){
                             <thead>
                             <tr>
                                 <!--字段-->
+                                <th>排序</th>
                                 <th>列名</th>
                                 <th>列说明</th>
                                 <th>字段类型</th>
                                 <th>属性类型</th>
                                 <th>属性名称</th>
-                                <ht>主键</ht>
-                                <ht>插入</ht>
-                                <ht>更新</ht>
+                                <th>主键</th>
+                                <th>插入</th>
+                                <th>更新</th>
 
                                 <!--列表-->
-                                <ht>列表</ht>
-                                <ht>查询</ht>
-                                <ht>匹配方式</ht>
+                                <th>列表</th>
+                                <th>查询</th>
+                                <th>匹配方式</th>
 
                                 <!--表单-->
-                                <ht>编辑</ht>
+                                <th>编辑</th>
                                 <th>必填</th>
-                                <ht>控件类型</ht>
+                                <th>控件类型</th>
                                 <th>栅格</th>
-                                <ht>新行</ht>
-                                <ht>字典类型</ht>
-                                <ht>字段验证</ht>
-                                <ht>排序</ht>
+                                <th>新行</th>
+                                <th>字典类型</th>
+                                <th>字段验证</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -169,7 +170,7 @@ layout("/layouts/platform.html"){
 </div>
 <script language="JavaScript">
     function initTableColumn(tableName) {
-        datatable = $('.datatable').DataTable({
+        /*datatable = $('.datatable').DataTable({
             "dom": '<"toolbar">frtip',
             "searching": false,
             "processing": false,
@@ -191,10 +192,12 @@ layout("/layouts/platform.html"){
                 "data": function (d) {
                 }
             },
-            "order": [[19, "desc"]],
+            "order": [[20, "desc"]],
             "columns": [
+                {"data": "columnSort", "bSortable": false},
                 {"data": "columnName", "bSortable": true, width: 80},
                 {"data": "comments", "bSortable": false},
+                {"data": "columnType", "bSortable": false},
                 {"data": "attrType", "bSortable": false},
                 {"data": "attrName", "bSortable": false},
                 {"data": "isPk", "bSortable": false},
@@ -215,13 +218,57 @@ layout("/layouts/platform.html"){
                 {
                     "render": function (data, type, row) {
                         return '<div class="btn-group"><button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
+                            '<i class="ti-settings"></i> <span class=""ti-angle-down"></span></button><ul class="dropdown-menu" role="menu">' +
+                            '<li><a href="${base}/gen/table/add'+ row.id +'" data-pjax>修改</a></li>' +
+                            '<li class="divider"></li>' +
+                            '<li><a href="javascript:void(0);" onclick=del(\''+ row.id + '\')">删除</a></li>' +
+                            '</ul></div>';
+                    },
+                    "targets": 20
+                }
+            ]
+        });*/
+        datatable = $('.datatable').DataTable({
+            "dom": '<"toolbar">frtip',
+            "searching": false,
+            "processing": false,
+            "serverSide": true,
+            "select": true,
+            "ordering": true,
+            "language": {
+                "url": "${base}/assets/plugins/datatables/cn.json"
+            },
+            "preDrawCallback": function () {
+                sublime.showLoadingbar($(".main-content"));
+            },
+            "drawCallback": function () {
+                sublime.closeLoadingbar($(".main-content"));
+            },
+            "ajax": {
+                "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
+                "type": "post",
+                "data": function (d) {
+                    d.unitid = $('#unitid').val();
+                }
+            },
+            "order": [[4, "desc"]],
+            "columns": [
+                {"data": "name", "bSortable": true, width: 80},
+                {"data": "comments", "bSortable": false},
+                {"data": "className", "bSortable": false},
+                {"data": "parentTable", "bSortable": true}
+            ],
+            "columnDefs": [
+                {
+                    "render": function (data, type, row) {
+                        return '<div class="btn-group"><button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
                             '   <i class="ti-settings"></i> <span class=""ti-angle-down"></span></button><ul class="dropdown-menu" role="menu">' +
                             '<li><a href="${base}/gen/table/add'+ row.id +'" data-pjax>修改</a></li>' +
                             '<li class="divider"></li>' +
                             '<li><a href="javascript:void(0);" onclick=del(\''+ row.id + '\')">删除</a></li>' +
                             '</ul></div>';
                     },
-                    "targets": 19
+                    "targets": 4
                 }
             ]
         });
