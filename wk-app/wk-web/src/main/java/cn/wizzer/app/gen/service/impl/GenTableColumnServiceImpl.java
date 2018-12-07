@@ -51,12 +51,13 @@ public class GenTableColumnServiceImpl extends BaseServiceImpl<Gen_table_column>
 
         Sql sql = Sqls.create("SELECT " +
                 "t.COLUMN_NAME AS columnName, " +
-                "t.COLUMN_TYPE AS columnType " +
+                "t.COLUMN_TYPE AS columnType, " +
                 "(CASE WHEN t.IS_NULLABLE = 'YES' THEN '1' ELSE '0' END) AS isNull, " +
-                "t.ORDINAL_POSITION * 10) AS columnSort," +
-                "t.COLUMN_COMMENT AS comments," +
+                "(CASE WHEN t.COLUMN_KEY = 'PRI' THEN '1' ELSE '0' END) AS isPk, " +
+                "(t.ORDINAL_POSITION * 10) AS columnSort," +
+                "t.COLUMN_COMMENT AS comments " +
             "FROM information_schema.`COLUMNS` t " +
-            "WHERE t.TABLE_SCHEMA = (select database()) AND t.TABLE_NAME = ($tableName) ORDER BY t.ORDINAL_POSITION ");
+            "WHERE t.TABLE_SCHEMA = (select database()) AND t.TABLE_NAME = '$tableName' ORDER BY t.ORDINAL_POSITION ");
 
         sql.setVar("tableName",tableName);
         sql.setCallback(new SqlCallback() {
@@ -66,12 +67,14 @@ public class GenTableColumnServiceImpl extends BaseServiceImpl<Gen_table_column>
                 while (resultSet.next()){
                     JSONObject obj = new JSONObject();
                     obj.put("columnName", resultSet.getString("columnName"));
-                    obj.put("columnLabel", resultSet.getString("columnLabel"));
+                    obj.put("columnLabel", resultSet.getString("comments"));
                     obj.put("columnType", resultSet.getString("columnType"));
                     obj.put("columnSort", resultSet.getString("columnSort"));
-                    obj.put("attrType", Utils.convertToJavaDataType(resultSet.getString("attrType")));
-                    obj.put("attrName", Utils.camelCaseName(resultSet.getString("attrName")));
+                    obj.put("comments", resultSet.getString("comments"));
+                    obj.put("attrType", Utils.convertToJavaDataType(resultSet.getString("columnType")));
+                    obj.put("attrName", Utils.camelCaseName(resultSet.getString("columnName")));
                     obj.put("isPk", resultSet.getString("isPk"));
+                    obj.put("isNull", resultSet.getString("isNull"));
 
                     list.add(obj);
                 }

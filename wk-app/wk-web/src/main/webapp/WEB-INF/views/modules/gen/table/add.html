@@ -190,6 +190,7 @@ layout("/layouts/platform.html"){
                 "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
                 "type": "post",
                 "data": function (d) {
+                    console.log(d);
                 }
             },
             "order": [[20, "desc"]],
@@ -248,15 +249,30 @@ layout("/layouts/platform.html"){
                 "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
                 "type": "post",
                 "data": function (d) {
-                    d.unitid = $('#unitid').val();
+                    console.log(d);
                 }
             },
-            "order": [[4, "desc"]],
+            "order": [[19, "desc"]],
             "columns": [
-                {"data": "name", "bSortable": true, width: 80},
+                {"data": "columnSort", "bSortable": false},
+                {"data": "columnName", "bSortable": true, width: 80},
                 {"data": "comments", "bSortable": false},
-                {"data": "className", "bSortable": false},
-                {"data": "parentTable", "bSortable": true}
+                {"data": "columnType", "bSortable": false},
+                {"data": "attrType", "bSortable": false},
+                {"data": "attrName", "bSortable": false},
+                {"data": "isPk", "bSortable": false},
+                {"data": "isInsert", "bSortable": false},
+                {"data": "isUpdate", "bSortable": false},
+                {"data": "isList", "bSortable": false},
+                {"data": "isQuery", "bSortable": false},
+                {"data": "queryType", "bSortable": false},
+                {"data": "isEdit", "bSortable": false},
+                {"data": "isNull", "bSortable": false},
+                {"data": "showType", "bSortable": false},
+                {"data": "gridType", "bSortable": false},
+                {"data": "isNewLine", "bSortable": false},
+                {"data": "dictType", "bSortable": false},
+                {"data": "fieldValidation", "bSortable": false}
             ],
             "columnDefs": [
                 {
@@ -268,7 +284,7 @@ layout("/layouts/platform.html"){
                             '<li><a href="javascript:void(0);" onclick=del(\''+ row.id + '\')">删除</a></li>' +
                             '</ul></div>';
                     },
-                    "targets": 4
+                    "targets": 19
                 }
             ]
         });

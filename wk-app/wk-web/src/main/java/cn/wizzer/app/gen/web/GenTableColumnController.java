@@ -4,6 +4,7 @@ import cn.wizzer.app.gen.service.GenTableColumnService;
 import cn.wizzer.framework.page.datatable.DataTableColumn;
 import cn.wizzer.framework.page.datatable.DataTableOrder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.json.JSONObject;
 import org.nutz.dao.Cnd;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -36,7 +37,10 @@ public class GenTableColumnController {
     @RequiresPermissions("sys.devtools.gen")
     public Object getDatabaseTableColumnList(@Param("tableName") String tableName, @Param("length") int length, @Param("start") int start, @Param("draw") int draw, @Param("::order") List<DataTableOrder> order, @Param("::columns") List<DataTableColumn> columns) {
 
-        return genTableColumnService.getDatabaseTableColumnList(tableName);
+        Cnd cnd = Cnd.NEW();
+        List<JSONObject> list = genTableColumnService.getDatabaseTableColumnList(tableName);
+        return genTableColumnService.data(length, start, draw, order, columns, cnd, null);
+        //return genTableColumnService.getDatabaseTableColumnList(tableName);
     }
 
     @At
