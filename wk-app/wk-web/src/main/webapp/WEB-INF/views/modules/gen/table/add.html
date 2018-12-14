@@ -13,7 +13,7 @@ layout("/layouts/platform.html"){
     <!--</div>-->
 </header>
 <div class="content-wrap">
-    <div class="wrapper">
+    <div class="wrapper" style="position: absolute;">
         <div class="row mb15">
             <div class="col-lg-12">
                 <form id="addRoleForm" class="form-horizontal stepy" method="post" action="${base}/platform/sys/role/addDo">
@@ -139,22 +139,22 @@ layout("/layouts/platform.html"){
                                 <th>属性类型</th>
                                 <th>属性名称</th>
                                 <th>主键</th>
-                                <th>插入</th>
-                                <th>更新</th>
+                                <!--<th>插入</th>
+                                <th>更新</th>-->
 
                                 <!--列表-->
-                                <th>列表</th>
+                               <!-- <th>列表</th>
                                 <th>查询</th>
-                                <th>匹配方式</th>
+                                <th>匹配方式</th>-->
 
                                 <!--表单-->
-                                <th>编辑</th>
+                                <!--<th>编辑</th>-->
                                 <th>必填</th>
-                                <th>控件类型</th>
+                                <!--<th>控件类型</th>
                                 <th>栅格</th>
                                 <th>新行</th>
                                 <th>字典类型</th>
-                                <th>字段验证</th>
+                                <th>字段验证</th>-->
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -169,66 +169,8 @@ layout("/layouts/platform.html"){
     </div>
 </div>
 <script language="JavaScript">
+    var datatable = null;
     function initTableColumn(tableName) {
-        /*datatable = $('.datatable').DataTable({
-            "dom": '<"toolbar">frtip',
-            "searching": false,
-            "processing": false,
-            "serverSide": true, //启用服务器端处理模式
-            "select": true,
-            "ordering": true,
-            "language": {
-                "url": "${base}/assets/plugins/datatables/cn.json"
-            },
-            "preDrawCallback": function () {
-                sublime.showLoadingbar($(".main-content"));
-            },
-            "drawCallback": function () {
-                sublime.closeLoadingbar($(".main-content"));
-            },
-            "ajax": {
-                "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
-                "type": "post",
-                "data": function (d) {
-                    console.log(d);
-                }
-            },
-            "order": [[20, "desc"]],
-            "columns": [
-                {"data": "columnSort", "bSortable": false},
-                {"data": "columnName", "bSortable": true, width: 80},
-                {"data": "comments", "bSortable": false},
-                {"data": "columnType", "bSortable": false},
-                {"data": "attrType", "bSortable": false},
-                {"data": "attrName", "bSortable": false},
-                {"data": "isPk", "bSortable": false},
-                {"data": "isInsert", "bSortable": false},
-                {"data": "isUpdate", "bSortable": false},
-                {"data": "isList", "bSortable": false},
-                {"data": "isQuery", "bSortable": false},
-                {"data": "queryType", "bSortable": false},
-                {"data": "isEdit", "bSortable": false},
-                {"data": "isNull", "bSortable": false},
-                {"data": "showType", "bSortable": false},
-                {"data": "gridType", "bSortable": false},
-                {"data": "isNewLine", "bSortable": false},
-                {"data": "dictType", "bSortable": false},
-                {"data": "fieldValidation", "bSortable": false}
-            ],
-            "columnDefs": [
-                {
-                    "render": function (data, type, row) {
-                        return '<div class="btn-group"><button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
-                            '<i class="ti-settings"></i> <span class=""ti-angle-down"></span></button><ul class="dropdown-menu" role="menu">' +
-                            '<li><a href="${base}/gen/table/add'+ row.id +'" data-pjax>修改</a></li>' +
-                            '<li class="divider"></li>' +
-                            '<li><a href="javascript:void(0);" onclick=del(\''+ row.id + '\')">删除</a></li>' +
-                            '</ul></div>';
-                    },
-                    "targets": 20
-                }
-            ]
-        });*/
         datatable = $('.datatable').DataTable({
             "dom": '<"toolbar">frtip',
             "searching": false,
@@ -236,6 +178,7 @@ layout("/layouts/platform.html"){
             "serverSide": true,
             "select": true,
             "ordering": true,
+            "destory": true,
             "language": {
                 "url": "${base}/assets/plugins/datatables/cn.json"
             },
@@ -249,30 +192,32 @@ layout("/layouts/platform.html"){
                 "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
                 "type": "post",
                 "data": function (d) {
-                    console.log(d);
+                    d.beginDate = $("#beginDate").val();
+                    d.endDate = $("#endDate").val();
+                    d.type = $("#type").val();
                 }
             },
-            "order": [[19, "desc"]],
+            "order": [[8, "desc"]],
             "columns": [
                 {"data": "columnSort", "bSortable": false},
-                {"data": "columnName", "bSortable": true, width: 80},
+                {"data": "columnName", "bSortable": false},
                 {"data": "comments", "bSortable": false},
                 {"data": "columnType", "bSortable": false},
                 {"data": "attrType", "bSortable": false},
                 {"data": "attrName", "bSortable": false},
                 {"data": "isPk", "bSortable": false},
-                {"data": "isInsert", "bSortable": false},
-                {"data": "isUpdate", "bSortable": false},
-                {"data": "isList", "bSortable": false},
-                {"data": "isQuery", "bSortable": false},
-                {"data": "queryType", "bSortable": false},
-                {"data": "isEdit", "bSortable": false},
-                {"data": "isNull", "bSortable": false},
-                {"data": "showType", "bSortable": false},
-                {"data": "gridType", "bSortable": false},
-                {"data": "isNewLine", "bSortable": false},
-                {"data": "dictType", "bSortable": false},
-                {"data": "fieldValidation", "bSortable": false}
+                // {"data": "isInsert", "bSortable": false},
+                // {"data": "isUpdate", "bSortable": false},
+                // {"data": "isList", "bSortable": false},
+                // {"data": "isQuery", "bSortable": false},
+                // {"data": "queryType", "bSortable": false},
+                // {"data": "isEdit", "bSortable": false},
+                {"data": "isNull", "bSortable": false}
+                // {"data": "showType", "bSortable": false},
+                // {"data": "gridType", "bSortable": false},
+                // {"data": "isNewLine", "bSortable": false},
+                // {"data": "dictType", "bSortable": false},
+                // {"data": "fieldValidation", "bSortable": false}
             ],
             "columnDefs": [
                 {
@@ -284,7 +229,7 @@ layout("/layouts/platform.html"){
                             '<li><a href="javascript:void(0);" onclick=del(\''+ row.id + '\')">删除</a></li>' +
                             '</ul></div>';
                     },
-                    "targets": 19
+                    "targets": 8
                 }
             ]
         });

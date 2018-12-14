@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +48,7 @@ public class GenTableColumnServiceImpl extends BaseServiceImpl<Gen_table_column>
     }
 
     @Override
-    public List<JSONObject> getDatabaseTableColumnList(String tableName) {
+    public List<Map> getDatabaseTableColumnList(String tableName) {
 
         Sql sql = Sqls.create("SELECT " +
                 "t.COLUMN_NAME AS columnName, " +
@@ -63,9 +64,9 @@ public class GenTableColumnServiceImpl extends BaseServiceImpl<Gen_table_column>
         sql.setCallback(new SqlCallback() {
             @Override
             public Object invoke(Connection connection, ResultSet resultSet, Sql sql) throws SQLException {
-                List<JSONObject> list = new ArrayList<>();
+                List<Map<String, String>> list = new ArrayList<>();
                 while (resultSet.next()){
-                    JSONObject obj = new JSONObject();
+                    Map<String, String> obj = new HashMap<>();
                     obj.put("columnName", resultSet.getString("columnName"));
                     obj.put("columnLabel", resultSet.getString("comments"));
                     obj.put("columnType", resultSet.getString("columnType"));
@@ -83,6 +84,47 @@ public class GenTableColumnServiceImpl extends BaseServiceImpl<Gen_table_column>
         });
         this.dao().execute(sql);
 
-        return sql.getList(JSONObject.class);
+        return sql.getList(Map.class);
+    }
+
+    @Override
+    public Sql getDatabaseTableColumnListForSql(String tableName) {
+
+        Sql sql = Sqls.create("SELECT " +
+                "t.COLUMN_NAME AS columnName, " +
+                "t.COLUMN_TYPE AS columnType, " +
+                "(CASE WHEN t.IS_NULLABLE = 'YES' THEN '1' ELSE '0' END) AS isNull, " +
+                "(CASE WHEN t.COLUMN_KEY = 'PRI' THEN '1' ELSE '0' END) AS isPk, " +
+                "(t.ORDINAL_POSITION * 10) AS columnSort," +
+                "t.COLUMN_COMMENT AS comments " +
+                "FROM information_schema.`COLUMNS` t " +
+                "WHERE t.TABLE_SCHEMA = (select database()) AND t.TABLE_NAME = '$tableName' ORDER BY t.ORDINAL_POSITION ");
+
+        sql.setVar("tableName",tableName);
+        sql.setCallback(new SqlCallback() {
+            @Override
+            public Object invoke(Connection connection, ResultSet resultSet, Sql sql) throws SQLException {
+                List<JSONObject> list = new ArrayList<>();
+
+                while (resultSet.next()){
+                    JSONObject obj = new JSONObject();
+                    obj.put("columnName", resultSet.getString("columnName"));
+                    obj.put("columnLabel", resultSet.getString("comments"));
+                    obj.put("columnType", resultSet.getString("columnType"));
+                    obj.put("columnSort", resultSet.getString("columnSort"));
+                    obj.put("comments", resultSet.getString("comments"));
+                    obj.put("attrType", Utils.convertToJavaDataType(resultSet.getString("columnType")));
+                    obj.put("attrName", Utils.camelCaseName(resultSet.getString("columnName")));
+                    obj.put("isPk", resultSet.getString("isPk"));
+                    obj.put("isNull", resultSet.getString("isNull"));
+                    obj.put("isNull222", resultSet.getString("isNull"));
+
+                    list.add(obj);
+                }
+                return list;
+            }
+        });
+
+        return sql;
     }
 }
