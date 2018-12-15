@@ -12,85 +12,18 @@ layout("/layouts/platform.html"){
     <!--</div>-->
     <!--</div>-->
 </header>
-<div class="content-wrap">
-    <div class="wrapper" style="position: absolute;">
-        <div class="row mb15">
-            <div class="col-lg-12">
-                <form id="addRoleForm" class="form-horizontal stepy" method="post" action="${base}/platform/sys/role/addDo">
-                    <fieldset title="第 1 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
-                        <legend>选择业务表</legend>
+<div class="container-fluid">
+    <div class="row" >
+        <div class="col-lg-12">
+            <form id="addRoleForm" class="form-horizontal stepy" role="form" method="post" action="${base}/platform/sys/role/addDo">
+                <fieldset title="第 1 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                    <legend>选择业务表</legend>
+                    <div class="form-group">
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for="databaseTableName" class="col-sm-1 control-label">表名</label>
-                                <!--<div class="col-sm-8">
-                                    <div class="input-group">
-                                        <input id="databaseTableName" type="text" class="form-control" placeholder="请选择需要添加的业务表" disabled
-                                               value="<%if(!isEmpty(obj)){%>${obj.name}<%}%>"/>
-
-                                        <span class="input-group-btn">
-			                             			<button type="button" class="btn btn-primary" data-toggle="modal"
-                                                            data-target="#dialogSelectTable"><i class="ti-plus"></i>选择
-                                                    </button>
-			                             		</span>
-                                    </div>
-                                    <input type="hidden" name="databaseTableName" value="<%if(!isEmpty(obj)){%>${obj.id}<%}%>">
-                                </div>-->
-                                <div class="col-sm-8">
-                                    <select id="databaseTableName" name="databaseTableName" data-parsley-required="true" class="form-control">
-                                        <option value="">请选择需要添加的业务表</option>
-                                        <%if(!isEmpty(tableList)){
-                                            for(table in tableList){
-                                            %>
-                                                <option value="${table.tableName},${table.comments}">${table.tableName}: ${table.comments}</option>
-                                            <%
-                                            }
-                                        }%>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset title="第 2 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
-                        <legend>基本信息</legend>
-
-                        <div class="form-group">
-                            <label for="tableName" class="col-sm-1 control-label">表名</label>
-
-                            <div class="col-sm-11">
-                                <input type="text" class="form-control" id="tableName" name="tableName" validate="true" placeholder="表名"
-                                       maxlength="20">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="comments" class="col-sm-1 control-label">表说明</label>
-
-                            <div class="col-sm-11">
-                                <input type="text" class="form-control" id="comments" name="comments" placeholder="表说明"
-                                       maxlength="50">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="className" class="col-sm-1 control-label">实体类名</label>
-
-                            <div class="col-sm-11">
-                                <input type="text" class="form-control" id="className" name="className" validate="true" placeholder="实体类名"
-                                       maxlength="50">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="functionAuthor" class="col-sm-1 control-label">功能作者</label>
-
-                            <div class="col-sm-11">
-                                <input type="text" class="form-control" id="functionAuthor" name="functionAuthor" validate="true" placeholder="功能作者"
-                                       maxlength="50">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="parentTableName" class="col-sm-1 control-label">关联父表</label>
-
-                            <div class="col-sm-11">
-                                <select id="parentTableName" name="parentTableName" data-parsley-required="true" class="form-control">
-                                    <option value="">请选择关联父表</option>
+                            <label for="databaseTableName" class="col-sm-1 control-label">表名</label>
+                            <div class="col-sm-8">
+                                <select id="databaseTableName" name="databaseTableName" data-parsley-required="true" class="form-control">
+                                    <option value="">请选择需要添加的业务表</option>
                                     <%if(!isEmpty(tableList)){
                                         for(table in tableList){
                                         %>
@@ -101,70 +34,129 @@ layout("/layouts/platform.html"){
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="parentTableFkName" class="col-sm-1 control-label">关联父表外键</label>
+                    </div>
+                </fieldset>
+                <fieldset title="第 2 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                    <legend>基本信息</legend>
 
-                            <div class="col-sm-11">
-                                <select id="parentTableFkName" name="parentTableFkName" data-parsley-required="true" class="form-control">
-                                    <option value="">请选择关联父表外键</option>
-                                    <%if(!isEmpty(tableColumnList)){
-                                        for(tableColumn in tableColumnList){
-                                        %>
-                                            <option value="${tableColumn.tableColumnName},${tableColumn.tableColumnComments}">${tableColumn.tableColumnName}: ${tableColumn.tableColumnComments}</option>
-                                        <%
-                                        }
-                                    }%>
-                                </select>
-                            </div>
+                    <div class="form-group">
+                        <label for="tableName" class="col-sm-1 control-label">表名</label>
+
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="tableName" name="tableName" validate="true" placeholder="表名"
+                                   maxlength="20">
                         </div>
-                        <div class="form-group">
-                            <label for="remarks" class="col-sm-1 control-label">备注</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="comments" class="col-sm-1 control-label">表说明</label>
 
-                            <div class="col-sm-11">
-                                <textarea class="form-control" id="remarks" name="remarks" placeholder="备注" maxlength="50"></textarea>
-                            </div>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="comments" name="comments" placeholder="表说明"
+                                   maxlength="50">
                         </div>
-                    </fieldset>
-                    <fieldset title="第 3 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
-                        <legend>字段列表</legend>
+                    </div>
+                    <div class="form-group">
+                        <label for="className" class="col-sm-1 control-label">实体类名</label>
 
-                        <table class="table table-bordered table-striped mg-t datatable">
-                            <thead>
-                            <tr>
-                                <!--字段-->
-                                <th>排序</th>
-                                <th>列名</th>
-                                <th>列说明</th>
-                                <th>字段类型</th>
-                                <th>属性类型</th>
-                                <th>属性名称</th>
-                                <th>主键</th>
-                                <!--<th>插入</th>
-                                <th>更新</th>-->
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="className" name="className" validate="true" placeholder="实体类名"
+                                   maxlength="50">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="functionAuthor" class="col-sm-1 control-label">功能作者</label>
 
-                                <!--列表-->
-                               <!-- <th>列表</th>
-                                <th>查询</th>
-                                <th>匹配方式</th>-->
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="functionAuthor" name="functionAuthor" validate="true" placeholder="功能作者"
+                                   maxlength="50">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentTableName" class="col-sm-1 control-label">关联父表</label>
 
-                                <!--表单-->
-                                <!--<th>编辑</th>-->
-                                <th>必填</th>
-                                <!--<th>控件类型</th>
-                                <th>栅格</th>
-                                <th>新行</th>
-                                <th>字典类型</th>
-                                <th>字段验证</th>-->
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </fieldset>
-                    <button class="stepy-finish btn btn-primary pull-right" data-loading-text="正在提交...">完成</button>
-                </form>
-            </div>
+                        <div class="col-sm-11">
+                            <select id="parentTableName" name="parentTableName" data-parsley-required="true" class="form-control">
+                                <option value="">请选择关联父表</option>
+                                <%if(!isEmpty(tableList)){
+                                    for(table in tableList){
+                                    %>
+                                        <option value="${table.tableName},${table.comments}">${table.tableName}: ${table.comments}</option>
+                                    <%
+                                    }
+                                }%>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentTableFkName" class="col-sm-1 control-label">关联父表外键</label>
+
+                        <div class="col-sm-11">
+                            <select id="parentTableFkName" name="parentTableFkName" data-parsley-required="true" class="form-control">
+                                <option value="">请选择关联父表外键</option>
+                                <%if(!isEmpty(tableColumnList)){
+                                    for(tableColumn in tableColumnList){
+                                    %>
+                                        <option value="${tableColumn.tableColumnName},${tableColumn.tableColumnComments}">${tableColumn.tableColumnName}: ${tableColumn.tableColumnComments}</option>
+                                    <%
+                                    }
+                                }%>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remarks" class="col-sm-1 control-label">备注</label>
+
+                        <div class="col-sm-11">
+                            <textarea class="form-control" id="remarks" name="remarks" placeholder="备注" maxlength="50"></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset title="第 3 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                    <legend>字段列表</legend>
+
+                    <table class="table table-bordered table-striped mg-t datatable">
+                        <thead>
+                        <tr>
+                            <!--字段-->
+                            <th>排序</th>
+                            <th>列名</th>
+                            <th>列说明</th>
+                            <th>字段类型</th>
+                            <th>属性类型</th>
+                            <th>属性名称</th>
+                            <th>主键</th>
+                            <!--<th>插入</th>
+                            <th>更新</th>-->
+
+                            <!--列表-->
+                           <!-- <th>列表</th>
+                            <th>查询</th>
+                            <th>匹配方式</th>-->
+
+                            <!--表单-->
+                            <!--<th>编辑</th>-->
+                            <th>必填</th>
+                            <!--<th>控件类型</th>
+                            <th>栅格</th>
+                            <th>新行</th>
+                            <th>字典类型</th>
+                            <th>字段验证</th>-->
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+                <button class="stepy-finish btn btn-primary pull-right" data-loading-text="正在提交...">完成</button>
+                <!--<div class="row">
+                    <div class="col-xs-12">
+
+                        <button class="stepy-finish btn btn-primary pull-right" data-loading-text="正在提交...">完成</button>
+                    </div>
+                </div>-->
+            </form>
         </div>
     </div>
 </div>
@@ -253,6 +245,7 @@ layout("/layouts/platform.html"){
         $(".stepy").stepy({
             backLabel: "上一步",
             nextLabel: "下一步",
+            finishButton: true,
             errorImage: true,
             block: true,
             validate: true,
@@ -279,14 +272,6 @@ layout("/layouts/platform.html"){
                     initTableColumn(tableName);
                 }
             }, finish: function(index) {
-                var tree = $.jstree.reference("#jsTreeMenu");
-                var nodes = tree.get_selected();
-                //查询所选节点的所有父节点
-                for (var i = 0; i < nodes.length; i++) {
-                    var node = nodes[i];
-                    each(node, tree, nodes);
-                }
-                $("#menuIds").val(nodes);
 
             }
         });
