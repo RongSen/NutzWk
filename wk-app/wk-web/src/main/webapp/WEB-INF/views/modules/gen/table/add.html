@@ -12,10 +12,14 @@ layout("/layouts/platform.html"){
     <!--</div>-->
     <!--</div>-->
 </header>
-<div class="container-fluid">
-    <div class="row" >
+
+<nav class="navbar">
+    <div class="container-fluid"></div>
+</nav>
+<div class="container-fluid main-content">
+    <div class="row">
         <div class="col-lg-12">
-            <form id="addRoleForm" class="form-horizontal stepy" role="form" method="post" action="${base}/platform/sys/role/addDo">
+            <form id="addRoleForm" class="form-horizontal stepy" role="form" method="post" action="${base}/gen/tableColumn/addDo">
                 <fieldset title="第 1 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
                     <legend>选择业务表</legend>
                     <div class="form-group">
@@ -149,10 +153,9 @@ layout("/layouts/platform.html"){
                     </table>
                 </fieldset>
 
-                <button class="stepy-finish btn btn-primary pull-right" data-loading-text="正在提交...">完成</button>
+                <button class="stepy-finish btn btn-primary pull-right" style="margin-bottom: 3%;" data-loading-text="正在提交...">完成</button>
                 <!--<div class="row">
                     <div class="col-xs-12">
-
                         <button class="stepy-finish btn btn-primary pull-right" data-loading-text="正在提交...">完成</button>
                     </div>
                 </div>-->
@@ -165,12 +168,14 @@ layout("/layouts/platform.html"){
     function initTableColumn(tableName) {
         datatable = $('.datatable').DataTable({
             "dom": '<"toolbar">frtip',
-            "searching": false,
+            "searching":false, //去掉搜索框
             "processing": false,
             "serverSide": true,
             "select": true,
             "ordering": true,
-            "destory": true,
+            "retrieve": true,
+            "destroy": true, //Cannot reinitialise DataTable,解决重新加载表格内容问题
+            "paging": true,//是否开启本地分页
             "language": {
                 "url": "${base}/assets/plugins/datatables/cn.json"
             },
@@ -241,7 +246,6 @@ layout("/layouts/platform.html"){
         $("#dialogSelectUnit").modal("hide");
     }
     $(function () {
-        var jsTreeMenu;
         $(".stepy").stepy({
             backLabel: "上一步",
             nextLabel: "下一步",
@@ -259,7 +263,7 @@ layout("/layouts/platform.html"){
 
                     var className = "";
                     var tableNameArray = tableName.split("_");
-                    for(i in tableNameArray){
+                    for(var i in tableNameArray){
                         var word = tableNameArray[i];
                         className += word.charAt(0).toUpperCase() + word.slice(1);
                     }
@@ -267,12 +271,21 @@ layout("/layouts/platform.html"){
                     $("#tableName").val(tableName);
                     $("#comments").val(tableComments);
                     $("#className").val(className);
+
+                    console.log(datatable);
+                    datatable.ajax = {
+                        "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
+                        "type": "post",
+                        "data": function (d) {
+                        }
+                    };
+                    console.log("11111111111111");
                 }
                 if(idx == 3){
                     initTableColumn(tableName);
                 }
             }, finish: function(index) {
-
+                console.log(index);
             }
         });
         $(".stepy").validate({

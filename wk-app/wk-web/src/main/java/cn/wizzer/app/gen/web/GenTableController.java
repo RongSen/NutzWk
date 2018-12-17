@@ -5,7 +5,6 @@ import cn.wizzer.framework.base.Result;
 import cn.wizzer.framework.page.datatable.DataTableColumn;
 import cn.wizzer.framework.page.datatable.DataTableOrder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.json.JSONObject;
 import org.nutz.dao.Cnd;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -16,7 +15,6 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @IocBean
@@ -41,6 +39,14 @@ public class GenTableController {
     @RequiresPermissions("sys.devtools.gen")
     public void add(HttpServletRequest req){
         req.setAttribute("tableList", genTableService.getDatabaseTableList());
+    }
+
+    @At("/addDo")
+    @Ok("beetl:/modules/gen/table/index.html")
+    @RequiresPermissions("sys.devtools.gen")
+    public void addDo(HttpServletRequest req){
+
+
     }
 
     @At("/delete")
