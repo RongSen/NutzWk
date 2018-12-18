@@ -271,17 +271,23 @@ layout("/layouts/platform.html"){
                     $("#tableName").val(tableName);
                     $("#comments").val(tableComments);
                     $("#className").val(className);
-
-                    console.log(datatable);
-                    datatable.ajax = {
-                        "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
-                        "type": "post",
-                        "data": function (d) {
-                        }
-                    };
-                    console.log("11111111111111");
                 }
                 if(idx == 3){
+
+                    if(datatable != null){
+                        // datatable.ajax = {
+                        //     "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
+                        //     "type": "post",
+                        //     "data": function (d) {
+                        //         console.log("11111111")
+                        //     }
+                        // };
+                        // datatable.ajax.reload();
+                        console.log(datatable);
+                        datatable.ajax.url("${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName).load();
+                        datatable.draw();
+
+                    }
                     initTableColumn(tableName);
                 }
             }, finish: function(index) {
