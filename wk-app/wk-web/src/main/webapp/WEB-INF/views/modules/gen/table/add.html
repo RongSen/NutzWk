@@ -19,7 +19,7 @@ layout("/layouts/platform.html"){
 <div class="container-fluid main-content">
     <div class="row">
         <div class="col-lg-12">
-            <form id="addRoleForm" class="form-horizontal stepy" role="form" method="post" action="${base}/gen/tableColumn/addDo">
+            <form id="addGenTable" class="form-horizontal stepy" role="form" method="post">
                 <fieldset title="第 1 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
                     <legend>选择业务表</legend>
                     <div class="form-group">
@@ -42,82 +42,75 @@ layout("/layouts/platform.html"){
                 </fieldset>
                 <fieldset title="第 2 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
                     <legend>基本信息</legend>
-
-                    <div class="form-group">
-                        <label for="tableName" class="col-sm-1 control-label">表名</label>
-
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="tableName" name="tableName" validate="true" placeholder="表名"
-                                   maxlength="20">
+                    <div class="rs-prog-base">
+                        <div class="form-group">
+                            <label for="tableName" class="col-sm-1 control-label">表名</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control rs-prog-base-value" id="tableName" name="tableName" validate="true" placeholder="表名"
+                                       maxlength="20">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="comments" class="col-sm-1 control-label">表说明</label>
-
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="comments" name="comments" placeholder="表说明"
-                                   maxlength="50">
+                        <div class="form-group">
+                            <label for="comments" class="col-sm-1 control-label">表说明</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control rs-prog-base-value" id="comments" name="comments" placeholder="表说明"
+                                       maxlength="50">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="className" class="col-sm-1 control-label">实体类名</label>
-
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="className" name="className" validate="true" placeholder="实体类名"
-                                   maxlength="50">
+                        <div class="form-group">
+                            <label for="className" class="col-sm-1 control-label">实体类名</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control rs-prog-base-value" id="className" name="className" validate="true" placeholder="实体类名"
+                                       maxlength="50">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="functionAuthor" class="col-sm-1 control-label">功能作者</label>
-
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="functionAuthor" name="functionAuthor" validate="true" placeholder="功能作者"
-                                   maxlength="50">
+                        <div class="form-group">
+                            <label for="functionAuthor" class="col-sm-1 control-label">功能作者</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control rs-prog-base-value" id="functionAuthor" name="functionAuthor" validate="true" placeholder="功能作者"
+                                       maxlength="50">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="parentTableName" class="col-sm-1 control-label">关联父表</label>
-
-                        <div class="col-sm-11">
-                            <select id="parentTableName" name="parentTableName" data-parsley-required="true" class="form-control">
-                                <option value="">请选择关联父表</option>
-                                <%if(!isEmpty(tableList)){
-                                    for(table in tableList){
-                                    %>
-                                        <option value="${table.tableName},${table.comments}">${table.tableName}: ${table.comments}</option>
-                                    <%
-                                    }
-                                }%>
-                            </select>
+                        <div class="form-group">
+                            <label for="parentTableName" class="col-sm-1 control-label">关联父表</label>
+                            <div class="col-sm-11">
+                                <select id="parentTableName" name="parentTableName" data-parsley-required="true" class="form-control rs-prog-base-value">
+                                    <option value="">请选择关联父表</option>
+                                    <%if(!isEmpty(tableList)){
+                                        for(table in tableList){
+                                        %>
+                                            <option value="${table.tableName},${table.comments}">${table.tableName}: ${table.comments}</option>
+                                        <%
+                                        }
+                                    }%>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="parentTableFkName" class="col-sm-1 control-label">关联父表外键</label>
-
-                        <div class="col-sm-11">
-                            <select id="parentTableFkName" name="parentTableFkName" data-parsley-required="true" class="form-control">
-                                <option value="">请选择关联父表外键</option>
-                                <%if(!isEmpty(tableColumnList)){
-                                    for(tableColumn in tableColumnList){
-                                    %>
-                                        <option value="${tableColumn.tableColumnName},${tableColumn.tableColumnComments}">${tableColumn.tableColumnName}: ${tableColumn.tableColumnComments}</option>
-                                    <%
-                                    }
-                                }%>
-                            </select>
+                        <div class="form-group">
+                            <label for="parentTableFkName" class="col-sm-1 control-label">关联父表外键</label>
+                            <div class="col-sm-11">
+                                <select id="parentTableFkName" name="parentTableFkName" data-parsley-required="true" class="form-control rs-prog-base-value">
+                                    <option value="">请选择关联父表外键</option>
+                                    <%if(!isEmpty(tableColumnList)){
+                                        for(tableColumn in tableColumnList){
+                                        %>
+                                            <option value="${tableColumn.tableColumnName},${tableColumn.tableColumnComments}">${tableColumn.tableColumnName}: ${tableColumn.tableColumnComments}</option>
+                                        <%
+                                        }
+                                    }%>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="remarks" class="col-sm-1 control-label">备注</label>
-
-                        <div class="col-sm-11">
-                            <textarea class="form-control" id="remarks" name="remarks" placeholder="备注" maxlength="50"></textarea>
+                        <div class="form-group">
+                            <label for="remarks" class="col-sm-1 control-label">备注</label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control rs-prog-base-value" id="remarks" name="remarks" placeholder="备注" maxlength="50"></textarea>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset title="第 3 步&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
                     <legend>字段列表</legend>
-
                     <table class="table table-bordered table-striped mg-t datatable">
                         <thead>
                         <tr>
@@ -152,13 +145,7 @@ layout("/layouts/platform.html"){
                         </tbody>
                     </table>
                 </fieldset>
-
                 <button class="stepy-finish btn btn-primary pull-right" style="margin-bottom: 3%;" data-loading-text="正在提交...">完成</button>
-                <!--<div class="row">
-                    <div class="col-xs-12">
-                        <button class="stepy-finish btn btn-primary pull-right" data-loading-text="正在提交...">完成</button>
-                    </div>
-                </div>-->
             </form>
         </div>
     </div>
@@ -258,40 +245,43 @@ layout("/layouts/platform.html"){
                 var databaseTableInfoArray = $("#databaseTableName").val().split(",");
                 var tableName = databaseTableInfoArray[0];
                 var tableComments = databaseTableInfoArray[1];
-
                 if (idx == 2) {
-
                     var className = "";
                     var tableNameArray = tableName.split("_");
                     for(var i in tableNameArray){
                         var word = tableNameArray[i];
                         className += word.charAt(0).toUpperCase() + word.slice(1);
                     }
-
                     $("#tableName").val(tableName);
                     $("#comments").val(tableComments);
                     $("#className").val(className);
                 }
                 if(idx == 3){
-
                     if(datatable != null){
-                        // datatable.ajax = {
-                        //     "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
-                        //     "type": "post",
-                        //     "data": function (d) {
-                        //         console.log("11111111")
-                        //     }
-                        // };
-                        // datatable.ajax.reload();
-                        console.log(datatable);
-                        datatable.ajax.url("${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName).load();
-                        datatable.draw();
-
+                        datatable.ajax = {
+                            "url": "${base}/gen/tableColumn/getDatabaseTableColumnList?tableName="+tableName,
+                            "type": "post",
+                            "data": function (d) {
+                                console.log("11111111")
+                            }
+                        };
+                        datatable.ajax.reload();
                     }
                     initTableColumn(tableName);
                 }
-            }, finish: function(index) {
-                console.log(index);
+            },
+            finish: function(index) {
+                var genTable = {};
+                $("div.rs-prog-base").find(".rs-prog-base-value").each(function(index,value){
+                    genTable[$(value).attr('id')]=$(value).val();
+                });
+
+                var genTableColumnArray = new Array();
+                datatable.rows().iterator('row', function(context, index){
+                    genTableColumnArray.push(this.row(index).data());
+                });
+
+                complete(genTable, genTableColumnArray);
             }
         });
         $(".stepy").validate({
@@ -315,9 +305,17 @@ layout("/layouts/platform.html"){
                 }
             }
         });
-        //表单ajax提交
-        $("#addRoleForm").ajaxForm({
+    });
+    function complete(genTable, genTableColumnArray) {
+        $("#addGenTable").ajaxSubmit({
+            type: 'post',
+            url: '${base}/gen/table/addDo',
             dataType: 'json',
+            data: {genTable: genTable, genTableColumnArray: JSON.stringify(genTableColumnArray)},
+            clearForm: true, //提交成功后，清楚所有表单元素的值
+            resetForm: true, //提交成功后，重置所有表单元素的值
+            cache: false,
+            async: true,   //同步返回
             beforeSubmit: function (arr, form, options) {
                 //获取选择的菜单
                 form.find("button:submit").button("loading");
@@ -327,6 +325,7 @@ layout("/layouts/platform.html"){
                     form.removeAttr("isSubmit");
                     return false;
                 }
+                console.log('beforeSubmit');
             },
             success: function (data, statusText, xhr, form) {
                 if (data.code == 0) {
@@ -339,12 +338,10 @@ layout("/layouts/platform.html"){
                     Toast.error(data.msg);
                 }
                 form.find("button:submit").button("reset");
+
+                console.log('successSubmit');
             }
         });
-        myForm.init();
-    });
-    function complete() {
-        $('#addRoleForm').submit();
     }
     function each(node, tree, nodes) {
         var p = tree.get_parent(node);

@@ -1,5 +1,7 @@
 package cn.wizzer.app.gen.web;
 
+import cn.wizzer.app.gen.entity.Gen_table;
+import cn.wizzer.app.gen.entity.Gen_table_column;
 import cn.wizzer.app.gen.service.GenTableService;
 import cn.wizzer.framework.base.Result;
 import cn.wizzer.framework.page.datatable.DataTableColumn;
@@ -11,10 +13,12 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
 import org.nutz.mvc.annotation.At;
+import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Array;
 import java.util.List;
 
 @IocBean
@@ -42,11 +46,17 @@ public class GenTableController {
     }
 
     @At("/addDo")
-    @Ok("beetl:/modules/gen/table/index.html")
+    @Ok(">>:/gen/table/index")
+    @Fail("http:404")
     @RequiresPermissions("sys.devtools.gen")
-    public void addDo(HttpServletRequest req){
-
-
+    public Object addDo(@Param("..") Gen_table genTable, @Param("..")String genTableColumnArray, HttpServletRequest req){
+        //genTableService.newGenTable(genTable);
+        System.out.println(genTableColumnArray);
+        try {
+            return Result.success("system.error");
+        } catch (Exception e) {
+            return Result.error("system.error");
+        }
     }
 
     @At("/delete")
