@@ -7,15 +7,15 @@ import cn.wizzer.framework.base.Result;
 import cn.wizzer.framework.page.datatable.DataTableColumn;
 import cn.wizzer.framework.page.datatable.DataTableOrder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.nutz.dao.Cnd;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
-import org.nutz.mvc.annotation.At;
-import org.nutz.mvc.annotation.Fail;
-import org.nutz.mvc.annotation.Ok;
-import org.nutz.mvc.annotation.Param;
+import org.nutz.mvc.adaptor.JsonAdaptor;
+import org.nutz.mvc.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Array;
@@ -46,16 +46,16 @@ public class GenTableController {
     }
 
     @At("/addDo")
-    @Ok(">>:/gen/table/index")
-    @Fail("http:404")
+    @Ok("json")
+    @AdaptBy(type = JsonAdaptor.class)
     @RequiresPermissions("sys.devtools.gen")
-    public Object addDo(@Param("..") Gen_table genTable, @Param("..")String genTableColumnArray, HttpServletRequest req){
+    public Object addDo(@Param("..")JSONObject obj, HttpServletRequest req){
         //genTableService.newGenTable(genTable);
-        System.out.println(genTableColumnArray);
+        System.out.println(obj);
         try {
-            return Result.success("system.error");
+            return Result.success("ok");
         } catch (Exception e) {
-            return Result.error("system.error");
+            return Result.error("error");
         }
     }
 

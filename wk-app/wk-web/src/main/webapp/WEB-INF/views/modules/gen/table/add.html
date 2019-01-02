@@ -307,11 +307,16 @@ layout("/layouts/platform.html"){
         });
     });
     function complete(genTable, genTableColumnArray) {
+        var data = {
+            genTableColumnArray: genTable,
+            genTable: genTableColumnArray
+        };
+        alert(JSON.stringify(data));
         $("#addGenTable").ajaxSubmit({
             type: 'post',
             url: '${base}/gen/table/addDo',
             dataType: 'json',
-            data: {genTable: genTable, genTableColumnArray: JSON.stringify(genTableColumnArray)},
+            data: data,
             clearForm: true, //提交成功后，清楚所有表单元素的值
             resetForm: true, //提交成功后，重置所有表单元素的值
             cache: false,
